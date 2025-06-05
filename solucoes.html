@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sunseeker | Soluções de Energia Solar</title>
+
+  <!-- Bootstrap + CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .card:hover {
+      transform: scale(1.03);
+      transition: 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    section {
+      padding-top: 3rem;
+    }
+
+    h2 {
+      border-bottom: 2px solid #ffc107;
+      padding-bottom: 0.5rem;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌞 Cabeçalho -->
+  <header class="bg-warning d-flex justify-content-between align-items-center px-4 py-3 shadow-sm">
+    <div class="d-flex align-items-center gap-3">
+      <img src="/public/imagens/logoBT.png" alt="Logotipo da Sunseeker" height="60" />
+      <nav class="d-none d-md-flex gap-4 fw-bold">
+        <button class="bubbles"><span class="text"><a href="/public/index.html">Início</a></span></button>
+        <button class="bubbles"><span class="text"><a href="/public/solucoes.html">Soluções</a></span></button>
+        <button class="bubbles"><span class="text"><a href="/public/produtos.html">Produtos</a></span></button>
+        <button class="bubbles"><span class="text"><a href="/public/inovacao.html">Inovação</a></span></button>
+        <button class="bubbles"><span class="text"><a href="/public/sobre.html">Sobre</a> </span></button>
+
+      </nav>
+    </div>
+  </header>
+
+  <!-- ☀️ Conteúdo Principal -->
+  <main class="container my-5">
+    <h1 class="mb-4">Soluções de Energia Solar</h1>
+    <p class="lead">
+      Nossa missão é levar energia solar de forma prática, inteligente e econômica para residências em todo o Brasil.
+    </p>
+
+    <section>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        <!-- Residencial -->
+        <div class="col">
+          <div class="card h-100">
+            <img src="imagens/residencial.jpg" class="card-img-top" alt="Soluções Residenciais">
+            <div class="card-body">
+              <h5 class="card-title">Soluções Residenciais</h5>
+              <p class="card-text">
+                Painéis solares pensados para casas, apartamentos e condomínios, com instalação rápida e acompanhamento técnico.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sistemas Fotovoltaicos -->
+        <div class="col">
+          <div class="card h-100">
+            <img src="imagens/fotovoltaico.jpg" class="card-img-top" alt="Sistema Fotovoltaico">
+            <div class="card-body">
+              <h5 class="card-title">Sistemas Fotovoltaicos</h5>
+              <p class="card-text">
+                Geração de energia limpa e economia na conta de luz. Com tecnologia de ponta, nossos kits são completos e duráveis.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulador de Economia -->
+        <div class="col">
+          <div class="card h-100">
+            <img src="imagens/simulador.jpg" class="card-img-top" alt="Simulador de Economia">
+            <div class="card-body">
+              <h5 class="card-title">Simulador de Economia</h5>
+              <p class="card-text">
+                Descubra quanto você pode economizar com energia solar em sua casa. Simule agora e veja seu retorno em tempo real!
+              </p>
+              <a href="simulador.html" class="btn btn-warning mt-2">Acessar Simulador</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- 🦶 Rodapé -->
+  <footer class="bg-dark text-white py-4 mt-5">
+    <div class="container row row-cols-1 row-cols-md-4 g-4">
+      <div>
+        <h6>Contato e Suporte</h6>
+        <p>Email: contato@sunseeker.com<br>WhatsApp: (11) 99727-4119</p>
+      </div>
+      <div>
+        <h6>FAQ</h6>
+        <a href="faq.html" class="text-white text-decoration-underline">Perguntas Frequentes</a>
+      </div>
+      <div>
+        <h6>Suporte Técnico</h6>
+        <p>Garantia e assistência especializada</p>
+      </div>
+      <div>
+        <h6>Redes Sociais</h6>
+        <p>Instagram | LinkedIn | YouTube</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
