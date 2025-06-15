@@ -28,20 +28,96 @@
 <link rel="stylesheet" href="CSS/pagina_padrao.css" />
 </head>
 <body>
-  <!-- 🌞 Cabeçalho -->
-  <header class="bg-warning d-flex justify-content-between align-items-center px-4 py-3 shadow-sm">
-   <div class="d-flex align-items-center gap-3">
-      <a href="/index.html"> <img src="imagens/logoBT.png" alt="Logotipo da Sunseeker" height="60" /></a>
-      <nav class="d-none d-md-flex gap-4 fw-bold">
-      <a href="/index.html"><button class="bubbles"><span class="text">Início</span></button></a>
-      <a href="/solucoes.html"><button class="bubbles"><span class="text">Soluções</span></button></a>
-      <a href="/produtos.html"><button class="bubbles"><span class="text">Produtos</span></button></a>
-      <a href="/inovacao.html"><button class="bubbles"><span class="text">Inovação</span></button></a>
-      <a href="/sobre.html"><button  style="background-color: #ff914d"class="bubbles"><span class="text">Sobre </span></button></a>
-      <a href="/simulador.html"><button class="bubbles"><span class="text">Simulador </span></button></a>
-      </nav>
+  <!-- 🔆 CABEÇALHO -->
+  <!-- Cabeçalho Melhorado -->
+    <header class="header-custom d-flex justify-content-between align-items-center px-4 py-3" id="mainHeader">
+        <!-- Container do Logo -->
+        <div class="d-flex align-items-center gap-3">
+            <a href="index.html" class="logo-container text-decoration-none">
+                <img src="imagens/logoBT.png" alt="Logotipo da Sunseeker" height="60" class="logo-img" />
+            </a>
+        </div>
+
+        <!-- Navegação Desktop -->
+        <nav class="d-none d-lg-flex gap-3 align-items-center">
+            <div class="nav-item">
+                <a href="index.html" class="nav-button ">
+                    <i class="fas fa-home me-2"></i>
+                    <span>Início</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="solucoes.html" class="nav-button">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    <span>Soluções</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="produtos.html" class="nav-button">
+                    <i class="fas fa-box me-2"></i>
+                    <span>Produtos</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="simulador.html" class="nav-button">
+                    <i class="fas fa-calculator me-2"></i>
+                    <span>Simulador</span>
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a href="sobre.html" class="nav-button active">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <span>Sobre</span>
+                </a>
+            </div>
+
+
+<div class="nav-item">
+    <a href="login.html" class="nav-button">
+        <i class="fas fa-user me-2"></i>
+        <span>Login</span>
+    </a>
+</div>
+        </nav>
+
+        <!-- Botão Menu Mobile -->
+        <button class="d-lg-none mobile-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- Menu Mobile Colapsável -->
+    <div class="collapse mobile-nav d-lg-none" id="mobileNav">
+        <div class="container-fluid py-3">
+            <nav class="d-flex flex-column gap-2">
+                <a href="index.html" class="nav-button ">
+                    <i class="fas fa-home me-2"></i>
+                    <span>Início</span>
+                </a>
+                <a href="solucoes.html" class="nav-button">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    <span>Soluções</span>
+                </a>
+                <a href="produtos.html" class="nav-button">
+                    <i class="fas fa-box me-2"></i>
+                    <span>Produtos</span>
+                </a>
+
+                <a href="sobre.html" class="nav-button active">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <span>Sobre</span>
+                </a>
+                <a href="simulador.html" class="nav-button">
+                    <i class="fas fa-calculator me-2"></i>
+                    <span>Simulador</span>
+                </a>
+                    <a href="login.html" class="nav-button">
+                    <i class="fas fa-user me-2"></i>
+                    <span>Login</span>
+                </a>
+        </div>
     </div>
-  </header>
   
 
   <!-- 🧾 Conteúdo principal -->
