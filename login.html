@@ -110,7 +110,7 @@
       auth.signInWithPopup(provider)
         .then(result => {
           alert(`Bem-vindo ${result.user.displayName}`);
-          window.location.href = 'index.html';
+          window.location.href = 'inicio.html';
         })
         .catch(error => {
           console.error(error);
