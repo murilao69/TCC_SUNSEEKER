@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar Senha - Sunseeker</title>
+  <link rel="icon" href="imagens/logoBT.png" type="image/png">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+  <!-- CSS Personalizado -->
+  <link rel="stylesheet" href="CSS/pagina_padrao.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+
+  <!-- 🔆 Recuperação -->
+  <main class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo"><i class="fas fa-sun"></i></div>
+        <h1 class="login-title">Recuperar Senha</h1>
+        <p class="login-subtitle">Informe seu e-mail para redefinir sua senha</p>
+      </div>
+
+      <form id="resetForm">
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope me-1"></i> E-mail</label>
+          <input type="email" id="email" class="form-control" placeholder="Digite seu e-mail" required>
+        </div>
+
+        <button type="submit" class="btn-login">
+          <span class="btn-text">Enviar Link de Recuperação</span>
+        </button>
+      </form>
+
+      <div class="signup-link">
+        Lembrou da senha? <a href="login.html">Voltar para o login</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- 🔥 Firebase Config + Scripts -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCzsKoNUO3pfWXr7kSBfZ3WEls_2TBhWx0",
+      authDomain: "sunseeker-11685.firebaseapp.com",
+      projectId: "sunseeker-11685",
+      storageBucket: "sunseeker-11685.appspot.com",
+      messagingSenderId: "997372628224",
+      appId: "1:997372628224:web:50ccfbfe938a0442bb37e5"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // 🔑 Enviar Link de Redefinição de Senha
+    const resetForm = document.getElementById('resetForm');
+    resetForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+
+      auth.sendPasswordResetEmail(email)
+        .then(() => {
+          alert('🔗 Um link de recuperação foi enviado para seu e-mail.\nConfira sua caixa de entrada ou spam!');
+          window.location.href = 'login.html';
+        })
+        .catch((error) => {
+          console.error('Erro ao enviar e-mail de recuperação:', error);
+          if (error.code === 'auth/user-not-found') {
+            alert('⚠️ E-mail não encontrado!');
+          } else if (error.code === 'auth/invalid-email') {
+            alert('⚠️ E-mail inválido!');
+          } else {
+            alert('Erro: ' + error.message);
+          }
+        });
+    });
+  </script>
+
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
