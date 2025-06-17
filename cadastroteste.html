@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro - Sunseeker</title>
+  <link rel="icon" href="imagens/logoBT.png" type="image/png">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <!-- CSS -->
+  <link rel="stylesheet" href="CSS/pagina_padrao.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+
+  <main class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo">
+          <i class="fas fa-user-plus"></i>
+        </div>
+        <h1 class="login-title">Crie sua conta</h1>
+        <p class="login-subtitle">Junte-se à comunidade Sunseeker</p>
+      </div>
+
+      <form id="cadastroForm">
+        <div class="form-group">
+          <label for="nome"><i class="fas fa-user me-1"></i> Nome</label>
+          <input type="text" id="nome" class="form-control" placeholder="Seu nome completo" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope me-1"></i> E-mail</label>
+          <input type="email" id="email" class="form-control" placeholder="Seu e-mail" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock me-1"></i> Senha</label>
+          <div style="position: relative;">
+            <input type="password" id="password" class="form-control" placeholder="Crie uma senha" required>
+            <button type="button" class="password-toggle" onclick="togglePassword()">
+              <i class="fas fa-eye" id="passwordToggleIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-login">
+          <span class="btn-text">Cadastrar</span>
+        </button>
+      </form>
+
+      <div class="signup-link">
+        Já tem uma conta? <a href="login.html">Entre aqui</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- 🔥 FIREBASE CONFIG -->
+  <script>
+    // 🔧 Config Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCzsKoNUO3pfWXr7kSBfZ3WEls_2TBhWx0",
+      authDomain: "sunseeker-11685.firebaseapp.com",
+      projectId: "sunseeker-11685",
+      storageBucket: "sunseeker-11685.appspot.com",
+      messagingSenderId: "997372628224",
+      appId: "1:997372628224:web:50ccfbfe938a0442bb37e5"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // 🧠 Cadastro
+    const cadastroForm = document.getElementById('cadastroForm');
+    cadastroForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nome = document.getElementById('nome').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('password').value.trim();
+
+      if (senha.length < 6) {
+        alert('A senha deve ter pelo menos 6 caracteres.');
+        return;
+      }
+
+      auth.createUserWithEmailAndPassword(email, senha)
+        .then(cred => {
+          const user = cred.user;
+
+          // 🔥 Salva no Firestore
+          return db.collection('usuarios').doc(user.uid).set({
+            nome: nome,
+            email: email,
+            dataCadastro: firebase.firestore.FieldValue.serverTimestamp()
+          })
+            .then(() => {
+              // 📧 Envia e-mail de verificação
+              user.sendEmailVerification();
+              alert(`Conta criada com sucesso! Verifique seu e-mail (${email}) antes de fazer login.`);
+              window.location.href = 'login.html';
+            });
+        })
+        .catch(error => {
+          console.error(error);
+          alert('Erro no cadastro: ' + error.message);
+        });
+    });
+
+    // 🔒 Mostrar/Esconder senha
+    function togglePassword() {
+      const passwordInput = document.getElementById('password');
+      const toggleIcon = document.getElementById('passwordToggleIcon');
+
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+      }
+    }
+  </script>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
