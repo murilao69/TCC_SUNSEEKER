@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo - SUNSEEKER Loading</title>
+    <link rel="stylesheet" href="sunseeker-loading.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .demo-buttons {
+            margin: 30px 0;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 12px 24px;
+            margin: 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Elemento para loading automático (descomente para ativar) -->
+    <!-- <div id="sunseeker-loading-auto"></div> -->
+
+    <div class="container">
+        <h1>SUNSEEKER Loading Component</h1>
+        <p>Demonstração do componente de loading com a logo SUNSEEKER</p>
+
+        <div class="demo-buttons">
+            <button class="btn" onclick="mostrarLoading()">Mostrar Loading</button>
+            <button class="btn" onclick="mostrarLoadingPersonalizado()">Loading Personalizado</button>
+            <button class="btn" onclick="mostrarLoadingRapido()">Loading Rápido</button>
+        </div>
+
+        <div class="info-box">
+            <h3>Como usar:</h3>
+            
+            <h4>1. Incluir os arquivos:</h4>
+            <div class="code">
+&lt;link rel="stylesheet" href="sunseeker-loading.css"&gt;
+&lt;script src="sunseeker-loading.js"&gt;&lt;/script&gt;
+            </div>
+
+            <h4>2. Uso básico:</h4>
+            <div class="code">
+// Mostrar loading simples
+const loading = showSunseekerLoading();
+
+// Ou criar uma instância personalizada
+const loading = new SunseekerLoading({
+    duration: 5000,
+    logoPath: 'caminho/para/logo.png'
+});
+loading.show();
+            </div>
+
+            <h4>3. Loading automático:</h4>
+            <div class="code">
+&lt;!-- Adicione este elemento para loading automático --&gt;
+&lt;div id="sunseeker-loading-auto"&gt;&lt;/div&gt;
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>Opções disponíveis:</h3>
+            <ul>
+                <li><strong>duration:</strong> Duração em milissegundos (padrão: 3000)</li>
+                <li><strong>logoPath:</strong> Caminho para a logo (padrão: 'logo_nitida.png')</li>
+                <li><strong>autoHide:</strong> Esconder automaticamente (padrão: true)</li>
+                <li><strong>fadeOutDuration:</strong> Duração do fade out (padrão: 500)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="sunseeker-loading.js"></script>
+    <script>
+        function mostrarLoading() {
+            const loading = showSunseekerLoading();
+        }
+
+        function mostrarLoadingPersonalizado() {
+            const loading = new SunseekerLoading({
+                duration: 5000,
+                logoPath: 'logo_nitida.png'
+            });
+            loading.show();
+        }
+
+        function mostrarLoadingRapido() {
+            const loading = new SunseekerLoading({
+                duration: 1500
+            });
+            loading.show();
+        }
+    </script>
+</body>
+</html>
+
