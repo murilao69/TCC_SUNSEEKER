@@ -1,10 +1,8 @@
 /* Reset e fontes */
 body {
-/* Estilo geral do corpo da página */
-overflow-y: auto;
-font-family: 'Arial', sans-serif;
-background-color: #fff;
-color: #000000;
+  font-family: 'Arial', sans-serif;
+  background-color: #fff;
+  color: #000000;
 }
 
 /* Cores principais */
