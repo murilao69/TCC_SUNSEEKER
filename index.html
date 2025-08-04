@@ -26,8 +26,9 @@
 
 <body>
 
+
   
-    <main class="container-fluid position-relative overflow-hidden" style="height: 100%; background: #649AE1; background-size: 400% 400%; overflow-y: auto; ">
+    <main class="container-fluid position-relative overflow-hidden" style="height: 100%; background: #649AE1; background-size: 400% 400%; ">
       <!-- Elementos decorativos de fundo -->
       <div class="position-absolute" style="top: 10%; right: 15%; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(40px); animation: float 6s ease-in-out infinite;"></div>
       <div class="position-absolute" style="bottom: 20%; left: 10%; width: 150px; height: 150px; background: rgba(255,255,255,0.08); border-radius: 50%; filter: blur(30px); animation: float 8s ease-in-out infinite reverse;"></div>
@@ -72,7 +73,6 @@
           ">
             Bem-vindo(a) à<br>
             <span style="background: #FFDE59; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Sunseeker</span>
-            <img src="imagens/logoBT.png" alt="imagem do logo da Sunseeker" style="width: 60px; height: 60px; vertical-align: middle; margin-left: 10px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">  
           </h1>
           
           <!-- Subtítulo melhorado -->
@@ -84,28 +84,7 @@
               font-weight: 300;
               text-shadow: 0 2px 10px rgba(0,0,0,0.1);
             ">
-              <span id="typewriter-text" style="white-space: pre-wrap;"></span>
-              <script>
-                const text = `Em nossa empresa, você descobre uma nova forma de economizar e gerar sua própria energia.
-              A Sunseeker é a sua parceira ideal para soluções de energia solar, oferecendo tecnologia de ponta e um compromisso com a sustentabilidade.
-              Junte-se a nós e faça parte da revolução energética que está transformando o mundo. A Sunseeker
-              é sinônimo de confiança, inovação e sustentabilidade. Descubra como podemos 
-              ajudar você a alcançar uma nova era de eficiência energética.
-              Para saber mais, faça seu cadastro ou entre para entrar em contato conosco.`;
-
-                let index = 0;
-                const speed = 10; // Velocidade de digitação em milissegundos
-
-                function typeWriter() {
-                  if (index < text.length) {
-                    document.getElementById("typewriter-text").innerHTML += text.charAt(index);
-                    index++;
-                    setTimeout(typeWriter, speed);
-                  }
-                }
-
-                typeWriter();
-              </script>
+              Descubra uma <strong style="color: #FFDE59;">nova forma</strong> de economizar e gerar sua própria energia.
             </p>
 
           </div>
@@ -139,7 +118,7 @@
             </a>
             
             <!-- Link secundário -->
-            <a href="cadastro.html" class="text-decoration-none d-inline-flex align-items-center gap-2" style="
+            <a href="#cadastro.html" class="text-decoration-none d-inline-flex align-items-center gap-2" style="
               color: rgba(255,255,255,0.8);
               font-weight: 500;
               transition: all 0.3s ease;
@@ -173,6 +152,12 @@
         </div>
       </div>
     </main>
+
+    
+    
+    
+
+
             </div>
         </div>
     </main>
