@@ -19,7 +19,8 @@
             });
         });
 
-        // =========================
+
+// =========================
 // FUNCIONALIDADE DE ALTERNÂNCIA DE TEMA
 // =========================
 function toggleTheme() {
@@ -138,3 +139,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
