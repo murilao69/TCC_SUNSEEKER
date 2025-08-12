@@ -29,7 +29,17 @@
     <div class="nav-item"><a href="produtos.html" class="nav-button"><i class="fas fa-box me-2"></i><span>Produtos</span></a></div>
     <div class="nav-item"><a href="simulador.html" class="nav-button active"><i class="fas fa-calculator me-2"></i><span>Simulador</span></a></div>
     <div class="nav-item"><a href="sobre.html" class="nav-button"><i class="fas fa-info-circle me-2"></i><span>Sobre</span></a></div>
-    <div class="nav-item"><a href="login.html" class="nav-button"><i class="fas fa-user me-2"></i><span>Login</span></a></div>
+    <div class="nav-item dropdown">
+    <a class="nav-button dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-cog me-2"></i>
+        <span>Configurações</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeText">Modo Escuro</span></a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Sair da Conta</a></li>
+    </ul>
+</div>
   </nav>
 
   <button class="d-lg-none mobile-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +56,17 @@
       <a href="produtos.html" class="nav-button"><i class="fas fa-box me-2"></i><span>Produtos</span></a>
       <a href="simulador.html" class="nav-button active"><i class="fas fa-calculator me-2"></i><span>Simulador</span></a>
       <a href="sobre.html" class="nav-button"><i class="fas fa-info-circle me-2"></i><span>Sobre</span></a>
-      <a href="login.html" class="nav-button"><i class="fas fa-user me-2"></i><span>Login</span></a>
+      <div class="nav-item dropdown">
+        <a class="nav-button dropdown-toggle" href="#" id="mobileNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-cog me-2"></i>
+            <span>Configurações</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileNavbarDropdown">
+            <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeText">Modo Escuro</span></a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Sair da Conta</a></li>
+        </ul>
+      </div>
     </nav>
   </div>
 </div>
@@ -179,3 +199,6 @@
 
 </body>
 </html>
+
+  <script src="JS/cabeçalho.js"></script>
+
