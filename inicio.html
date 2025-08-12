@@ -72,11 +72,16 @@
             </a>
         </div>
 
-        <div class="nav-item">
-            <a href="login.html" class="nav-button">
-                <i class="fas fa-user me-2"></i>
-                <span>Login</span>
-            </a>
+<div class="nav-item dropdown">
+    <a class="nav-button dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-cog me-2"></i>
+        <span>Configurações</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeText">Modo Escuro</span></a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Sair da Conta</a></li>
+    </ul>
 </div>
     </nav>
 
@@ -111,10 +116,23 @@
                 <i class="fas fa-calculator me-2"></i>
                 <span>Simulador</span>
             </a>
-                <a href="login.html" class="nav-button">
-                <i class="fas fa-user me-2"></i>
-                <span>Login</span>
-            </a>
+            <div class="dropdown">
+                <button class="nav-button dropdown-toggle" type="button" id="configDropdownMobile" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-cog me-2"></i>
+                    <span>Configurações</span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="configDropdownMobile">
+                    <li><button class="dropdown-item" onclick="toggleTheme()">
+                        <i class="fas fa-moon me-2" id="themeIconMobile"></i>
+                        <span id="themeTextMobile">Modo Escuro</span>
+                    </button></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><button class="dropdown-item text-danger" onclick="logout()">
+                        <i class="fas fa-sign-out-alt me-2"></i>
+                        Sair da Conta
+                    </button></li>
+                </ul>
+            </div>
         </nav>
     </div>
 </div>

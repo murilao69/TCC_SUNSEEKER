@@ -128,7 +128,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 2rem 1rem;
-    background: linear-gradient(135deg, #649AE1 0%, #9ab2d3 100%);
+    background: linear-gradient(135deg, #617aec 0%, #b7e0f3 100%);
     position: relative;
     overflow: hidden;
 }
@@ -512,3 +512,109 @@ footer a:hover {
 .btn-login.loading .btn-text {
     display: none;
 }
+
+/* =========================
+   DROPDOWN DE CONFIGURAÇÕES
+   ========================= */
+.dropdown-menu {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 107, 53, 0.1);
+    border-radius: 12px;
+    box-shadow: var(--shadow-medium);
+    padding: 0.5rem 0;
+    min-width: 200px;
+}
+
+.dropdown-item {
+    padding: 0.75rem 1rem;
+    color: var(--dark-color);
+    font-weight: 500;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 107, 53, 0.1);
+    color: var(--primary-color);
+}
+
+.dropdown-item.text-danger {
+    color: #dc3545 !important;
+}
+
+.dropdown-item.text-danger:hover {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545 !important;
+}
+
+.dropdown-divider {
+    border-top: 1px solid rgba(255, 107, 53, 0.1);
+    margin: 0.5rem 0;
+}
+
+/* =========================
+   MODO ESCURO
+   ========================= */
+[data-theme="dark"] {
+    --primary-color: #ff8c42;
+    --secondary-color: #ffa726;
+    --accent-color: #ffeb3b;
+    --dark-color: #ffffff;
+    --light-color: #2c3e50;
+    --gradient-primary: linear-gradient(135deg, #ff8c42 0%, #ffa726 100%);
+    --gradient-secondary: linear-gradient(135deg, #ffeb3b 0%, #ff8c42 100%);
+    --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.4);
+    --shadow-heavy: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] body {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: var(--dark-color);
+}
+
+[data-theme="dark"] .header-custom {
+    background: rgba(26, 26, 46, 0.9);
+    border-bottom: 1px solid rgba(255, 140, 66, 0.2);
+}
+
+[data-theme="dark"] .mobile-nav {
+    background: rgba(26, 26, 46, 0.95);
+    border-bottom: 1px solid rgba(255, 140, 66, 0.2);
+}
+
+[data-theme="dark"] .nav-button {
+    color: var(--dark-color);
+}
+
+[data-theme="dark"] .dropdown-menu {
+    background: rgba(26, 26, 46, 0.95);
+    border: 1px solid rgba(255, 140, 66, 0.2);
+}
+
+[data-theme="dark"] .dropdown-item {
+    color: var(--dark-color);
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+    background: rgba(255, 140, 66, 0.2);
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .dropdown-divider {
+    border-top: 1px solid rgba(255, 140, 66, 0.2);
+}
+
+/* =========================
+   TRANSIÇÕES SUAVES PARA MUDANÇA DE TEMA
+   ========================= */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
