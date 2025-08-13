@@ -1,158 +1,161 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sunseeker | Produtos</title>
-
-   <link rel="icon" href="imagens/logo.png" type="image/png">
-  
-  <!-- ✅ Bootstrap 5 CSS -->
+  <link rel="icon" href="imagens/logo.png" type="image/png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">  
-
-  <!-- SEO -->
-  <meta name="description" content="Sunseeker - Soluções de energia solar para residências e empresas. Inovação em eficiência energética.">
-  <meta name="author" content="Sunseeker">
-
-  <!-- ✅ Google Charts -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <meta name="description"
+    content="Sunseeker - Soluções de energia solar para residências e empresas. Inovação em eficiência energética.">
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link rel="stylesheet" href="CSS/pagina_padrao.css" />
 </head>
 
- <!-- 📄 CSS DA PÁGINA -->  
-<link rel="stylesheet" href="CSS/pagina_padrao.css" />
+<style>
+  .card:hover {
+    transform: scale(1.03);
+    transition: 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
 
+  section {
+    padding-top: 3rem;
+  }
 
-  <style>
-    .card:hover {
-      transform: scale(1.03);
-      transition: 0.3s ease;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    section {
-      padding-top: 3rem;
-    }
-
-    h2 {
-      border-bottom: 2px solid #ffc107;
-      padding-bottom: 0.5rem;
-      margin-bottom: 2rem;
-    }
-  </style>
+  h2 {
+    border-bottom: 2px solid #ffc107;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+  }
+</style>
 </head>
+
 <body>
 
   <!-- 🔆 CABEÇALHO -->
   <!-- Cabeçalho Melhorado -->
-    <header class="header-custom d-flex justify-content-between align-items-center px-4 py-3" id="mainHeader">
-        <!-- Container do Logo -->
-        <div class="d-flex align-items-center gap-3">
-            <a href="inicio.html" class="logo-container text-decoration-none">
-                <img src="imagens/logo.png" alt="Logotipo da Sunseeker" height="60" class="logo-img" />
-            </a>
-        </div>
+  <header class="header-custom d-flex justify-content-between align-items-center px-4 py-3" id="mainHeader">
+    <!-- Container do Logo -->
+    <div class="d-flex align-items-center gap-3">
+      <a href="inicio.html" class="logo-container text-decoration-none">
+        <img src="imagens/logo.png" alt="Logotipo da Sunseeker" height="60" class="logo-img" />
+      </a>
+    </div>
 
-        <!-- Navegação Desktop -->
-        <nav class="d-none d-lg-flex gap-3 align-items-center">
-            <div class="nav-item">
-                <a href="inicio.html" class="nav-button ">
-                    <i class="fas fa-home me-2"></i>
-                    <span>Início</span>
-                </a>
-            </div>
-            <div class="nav-item">
-                <a href="solucoes.html" class="nav-button ">
-                    <i class="fas fa-lightbulb me-2"></i>
-                    <span>Soluções</span>
-                </a>
-            </div>
-            <div class="nav-item">
-                <a href="produtos.html" class="nav-button active">
-                    <i class="fas fa-box me-2"></i>
-                    <span>Produtos</span>
-                </a>
-            </div>
-            <div class="nav-item">
-                <a href="simulador.html" class="nav-button">
-                    <i class="fas fa-calculator me-2"></i>
-                    <span>Simulador</span>
-                </a>
-            </div>
+    <!-- Navegação Desktop -->
+    <nav class="d-none d-lg-flex gap-3 align-items-center">
+      <div class="nav-item">
+        <a href="inicio.html" class="nav-button ">
+          <i class="fas fa-home me-2"></i>
+          <span>Início</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="solucoes.html" class="nav-button ">
+          <i class="fas fa-lightbulb me-2"></i>
+          <span>Soluções</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="produtos.html" class="nav-button active">
+          <i class="fas fa-box me-2"></i>
+          <span>Produtos</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="simulador.html" class="nav-button">
+          <i class="fas fa-calculator me-2"></i>
+          <span>Simulador</span>
+        </a>
+      </div>
 
-            <div class="nav-item">
-                <a href="sobre.html" class="nav-button">
-                    <i class="fas fa-info-circle me-2"></i>
-                    <span>Sobre</span>
-                </a>
-            </div>
+      <div class="nav-item">
+        <a href="sobre.html" class="nav-button">
+          <i class="fas fa-info-circle me-2"></i>
+          <span>Sobre</span>
+        </a>
+      </div>
 
 
-<div class="nav-item dropdown">
-    <a class="nav-button dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fas fa-cog me-2"></i>
-        <span>Configurações</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeText">Modo Escuro</span></a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Sair da Conta</a></li>
-    </ul>
-</div>
-        </nav>
+      <div class="nav-item dropdown">
+        <a class="nav-button dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          <i class="fas fa-cog me-2"></i>
+          <span>Configurações</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span
+                id="themeText">Modo Escuro</span></a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Sair da
+              Conta</a></li>
+        </ul>
+      </div>
+    </nav>
 
-        <!-- Botão Menu Mobile -->
-        <button class="d-lg-none mobile-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
-    </header>
+    <!-- Botão Menu Mobile -->
+    <button class="d-lg-none mobile-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav"
+      aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+  </header>
 
-    <!-- Menu Mobile Colapsável -->
-    <div class="collapse mobile-nav d-lg-none" id="mobileNav">
-        <div class="container-fluid py-3">
-            <nav class="d-flex flex-column gap-2">
-                <a href="inicio.html" class="nav-button ">
-                    <i class="fas fa-home me-2"></i>
-                    <span>Início</span>
-                </a>
-                <a href="solucoes.html" class="nav-button">
-                    <i class="fas fa-lightbulb me-2"></i>
-                    <span>Soluções</span>
-                </a>
-                <a href="produtos.html" class="nav-button active">
-                    <i class="fas fa-box me-2"></i>
-                    <span>Produtos</span>
-                </a>
+  <!-- Menu Mobile Colapsável -->
+  <div class="collapse mobile-nav d-lg-none" id="mobileNav">
+    <div class="container-fluid py-3">
+      <nav class="d-flex flex-column gap-2">
+        <a href="inicio.html" class="nav-button ">
+          <i class="fas fa-home me-2"></i>
+          <span>Início</span>
+        </a>
+        <a href="solucoes.html" class="nav-button">
+          <i class="fas fa-lightbulb me-2"></i>
+          <span>Soluções</span>
+        </a>
+        <a href="produtos.html" class="nav-button active">
+          <i class="fas fa-box me-2"></i>
+          <span>Produtos</span>
+        </a>
 
-                <a href="sobre.html" class="nav-button">
-                    <i class="fas fa-info-circle me-2"></i>
-                    <span>Sobre</span>
-                </a>
-                <a href="simulador.html" class="nav-button">
-                    <i class="fas fa-calculator me-2"></i>
-                    <span>Simulador</span>
-                </a>
-                <div class="nav-item dropdown">
-                    <a class="nav-button dropdown-toggle" href="#" id="mobileNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-cog me-2"></i>
-                        <span>Configurações</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileNavbarDropdown">
-                        <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeText">Modo Escuro</span></a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Sair da Conta</a></li>
-                    </ul>
-                </div>
+        <a href="sobre.html" class="nav-button">
+          <i class="fas fa-info-circle me-2"></i>
+          <span>Sobre</span>
+        </a>
+        <a href="simulador.html" class="nav-button">
+          <i class="fas fa-calculator me-2"></i>
+          <span>Simulador</span>
+        </a>
+        <div class="nav-item dropdown">
+          <a class="nav-button dropdown-toggle" href="#" id="mobileNavbarDropdown" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-cog me-2"></i>
+            <span>Configurações</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileNavbarDropdown">
+            <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span
+                  id="themeText">Modo Escuro</span></a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Sair da
+                Conta</a></li>
+          </ul>
         </div>
     </div>
+  </div>
 
   <!-- 📦 Conteúdo principal -->
   <main class="container my-5">
 
     <!-- Painéis Solares -->
     <section id="paineis">
-      <h2>Painéis Solares</h2>
+      <h2 class="mb-4" style="color: #ff914d;">Painéis Solares</h2>
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
           <div class="card h-100">
@@ -257,7 +260,7 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
 
-  <script src="JS/cabeçalho.js"></script>
-
+<script src="JS/cabeçalho.js"></script>
