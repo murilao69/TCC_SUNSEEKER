@@ -18,17 +18,7 @@
                 });
             });
         });
-// Bloquear o botão de voltar do navegador
-function bloquearBotaoVoltar() {
-    history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-        history.pushState(null, null, location.href);
-        alert('Ação bloqueada: Você não pode voltar para a página anterior.');
-    };
-}
 
-// Chamar a função ao carregar a página
-document.addEventListener('DOMContentLoaded', bloquearBotaoVoltar);
 
 // =========================
 // FUNCIONALIDADE DE ALTERNÂNCIA DE TEMA
