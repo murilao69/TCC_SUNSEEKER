@@ -34,3 +34,10 @@ function updateProgress(value) {
     document.querySelector(".loading-progress").style.width = value + "%";
     document.getElementById("loading-percent").innerText = value + "%";
 }
+
+//elemento de registro do Service Worker
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/TCC_SUNSEEKER/sw.js")
+      .then(() => console.log("Service Worker registrado com sucesso!"))
+      .catch(err => console.log("Falha ao registrar SW:", err));
+  }
