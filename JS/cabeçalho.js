@@ -9,15 +9,6 @@
             }
         });
 
-        // Fechar menu mobile ao clicar em um link
-        document.querySelectorAll('.mobile-nav .nav-button').forEach(link => {
-            link.addEventListener('click', () => {
-                const mobileNav = document.getElementById('mobileNav');
-                const bsCollapse = new bootstrap.Collapse(mobileNav, {
-                    hide: true
-                });
-            });
-        });
 
 
 // =========================
@@ -76,25 +67,47 @@ function toggleTheme() {
 // FUNCIONALIDADE DE LOGOUT
 // =========================
 function logout() {
-    // Confirmar logout
-    if (confirm('Tem certeza que deseja sair da sua conta?')) {
-        // Limpar dados do usuário (localStorage, sessionStorage, etc.)
-        localStorage.removeItem('userToken');
-        localStorage.removeItem('userData');
-        sessionStorage.clear();
-        
-        // Se estiver usando Firebase Auth
-        if (typeof firebase !== 'undefined' && firebase.auth) {
-            firebase.auth().signOut().then(() => {
-                console.log('Usuário deslogado do Firebase');
-            }).catch((error) => {
-                console.error('Erro ao deslogar do Firebase:', error);
-            });
+    // Usar SweetAlert para confirmação
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            title: 'Sair da conta?',
+            text: 'Tem certeza que deseja sair da sua conta?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, sair',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                realizarLogout();
+            }
+        });
+    } else {
+        // Fallback para confirm padrão
+        if (confirm('Tem certeza que deseja sair da sua conta?')) {
+            realizarLogout();
         }
-        
-        // Redirecionar para a página de login
-        window.location.href = 'login.html';
     }
+}
+
+function realizarLogout() {
+    // Limpar dados do usuário (localStorage, sessionStorage, etc.)
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('userData');
+    sessionStorage.clear();
+
+    // Se estiver usando Firebase Auth
+    if (typeof firebase !== 'undefined' && firebase.auth) {
+        firebase.auth().signOut().then(() => {
+            console.log('Usuário deslogado do Firebase');
+        }).catch((error) => {
+            console.error('Erro ao deslogar do Firebase:', error);
+        });
+    }
+
+    // Não fecha o menu mobile aqui
+
+    // Redirecionar para a página de login
+    window.location.href = 'login.html';
 }
 
 // =========================
