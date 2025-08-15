@@ -21,16 +21,8 @@
 </head>
 
 <body>
-  <!-- Tela de Loading -->
-<div id="loading-screen">
-    <div class="loading-content">
-        <img src="imagens/logo.png" alt="Sunseeker Logo" class="logo-pulse">
-        <div class="loading-bar">
-            <div class="loading-progress"></div>
-        </div>
-        <!--<span id="loading-percent">0%</span>-->
-    </div>
-</div>
+
+
 
 <!-- Tela de Loading 
 <div id="loading-screen">
@@ -63,6 +55,9 @@
     </div>
   </main>
 
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- 🔥 Firebase Config + Scripts -->
   <script>
     const firebaseConfig = {
@@ -85,17 +80,35 @@
 
       auth.sendPasswordResetEmail(email)
         .then(() => {
-          alert('🔗 Um link de recuperação foi enviado para seu e-mail.\nConfira sua caixa de entrada ou spam!');
-          window.location.href = 'login.html';
+          Swal.fire({
+            icon: 'success',
+            title: 'Link enviado!',
+            text: 'Um link de recuperação foi enviado para seu e-mail. Confira sua caixa de entrada ou spam!',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            window.location.href = 'login.html';
+          });
         })
         .catch((error) => {
           console.error('Erro ao enviar e-mail de recuperação:', error);
           if (error.code === 'auth/user-not-found') {
-            alert('⚠️ E-mail não encontrado!');
+            Swal.fire({
+              icon: 'warning',
+              title: 'E-mail não encontrado!',
+              text: 'Verifique se digitou corretamente.'
+            });
           } else if (error.code === 'auth/invalid-email') {
-            alert('⚠️ E-mail inválido!');
+            Swal.fire({
+              icon: 'error',
+              title: 'E-mail inválido!',
+              text: 'Digite um e-mail válido.'
+            });
           } else {
-            alert('Erro: ' + error.message);
+            Swal.fire({
+              icon: 'error',
+              title: 'Erro',
+      
+            });
           }
         });
     });

@@ -82,6 +82,8 @@
   </main>
 
   <!-- 🔥 Firebase Config + Scripts -->
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCzsKoNUO3pfWXr7kSBfZ3WEls_2TBhWx0",
@@ -116,12 +118,22 @@
       const provider = new firebase.auth.GoogleAuthProvider();
       auth.signInWithPopup(provider)
         .then(result => {
-          alert(`Bem-vindo ${result.user.displayName}`);
-          window.location.href = 'inicio.html';
+          Swal.fire({
+            icon: 'success',
+            title: `Bem-vindo ${result.user.displayName}`,
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            window.location.href = 'inicio.html';
+          });
         })
         .catch(error => {
           console.error(error);
-          alert('Erro no login com Google');
+          Swal.fire({
+            icon: 'error',
+            title: 'Erro no login com Google',
+            text: error.message
+          });
         });
     }
 
@@ -138,18 +150,34 @@
           const user = userCredential.user;
 
           if (user.emailVerified) {
-            alert('Login realizado com sucesso!');
-            window.location.href = 'inicio.html';
+            Swal.fire({
+              icon: 'success',
+              title: 'Login realizado com sucesso!',
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              window.location.href = 'inicio.html';
+            });
           } else {
-            alert('⚠️ Seu e-mail não foi verificado. Verifique sua caixa de entrada (ou spam).');
+            Swal.fire({
+              icon: 'warning',
+              title: '⚠️ Seu e-mail não foi verificado.',
+              text: 'Verifique sua caixa de entrada (ou spam).'
+            });
 
             user.sendEmailVerification()
               .then(() => {
-                alert('Enviamos novamente o e-mail de verificação.');
+                Swal.fire({
+                  icon: 'info',
+                  title: 'Enviamos novamente o e-mail de verificação.'
+                });
               })
               .catch((error) => {
                 console.error('Erro ao enviar e-mail de verificação:', error);
-                alert('Erro ao enviar e-mail de verificação.');
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Erro ao enviar e-mail de verificação.'
+                });
               });
 
             auth.signOut();
@@ -157,7 +185,10 @@
         })
         .catch((error) => {
           console.error('Erro no login:', error);
-          alert('E-mail ou senha incorretos ou conta não cadastrada.');
+          Swal.fire({
+            icon: 'error',
+            title: 'E-mail ou senha incorretos ou conta não cadastrada.',
+          });
         });
     });
   </script>
