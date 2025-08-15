@@ -20,6 +20,7 @@ const FILES_TO_CACHE = [
 
 ];
 
+
 // Instala e guarda arquivos no cache
 self.addEventListener("install", event => {
   event.waitUntil(
