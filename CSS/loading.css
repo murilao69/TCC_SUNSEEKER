@@ -1,4 +1,25 @@
-<!--
+/* ...existing code... */
+
+/* Modo escuro para a tela de loading */
+[data-theme="dark"] #loading-screen {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+
+/*    background-color: #181818; /* Fundo escuro */
+}
+
+[data-theme="dark"] .loading-bar {
+    background: #333; /* Barra de fundo mais escura */
+}
+
+[data-theme="dark"] .loading-progress {
+    background: #ffd740; /* Amarelo mais claro para contraste */
+}
+
+[data-theme="dark"] #loading-percent {
+    color: #eee; /* Texto claro */
+}
+
+/* ...existing code... */<!--
    /* Tela de loading ocupando a tela inteira */
    /*
 #loading-screen {

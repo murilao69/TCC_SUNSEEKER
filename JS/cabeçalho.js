@@ -66,6 +66,21 @@ function toggleTheme() {
 // =========================
 // FUNCIONALIDADE DE LOGOUT
 // =========================
+// ...existing code...
+
+// =========================
+// INTEGRAÇÃO DO SWEETALERT2
+// =========================
+if (typeof Swal === 'undefined') {
+    const script = document.createElement('script');
+    script.src = "https://cdn.jsdelivr.net/npm/sweetalert2@11";
+    script.onload = () => {
+        console.log('SweetAlert2 carregado!');
+    };
+    document.head.appendChild(script);
+}
+
+// ...existing code...
 function logout() {
     // Usar SweetAlert para confirmação
     if (typeof Swal !== 'undefined') {
@@ -103,13 +118,13 @@ function realizarLogout() {
             console.error('Erro ao deslogar do Firebase:', error);
         });
     }
-
     // Não fecha o menu mobile aqui
 
     // Redirecionar para a página de login
     window.location.href = 'login.html';
 }
 
+ 
 // =========================
 // INICIALIZAÇÃO DO TEMA
 // =========================
