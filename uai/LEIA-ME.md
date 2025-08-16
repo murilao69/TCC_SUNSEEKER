@@ -103,3 +103,13 @@ Empresas e residências que desejam monitorar e economizar energia.
 Estudantes e profissionais que desejam aprender sobre integração de tecnologias web.
 5. Conclusão
 O projeto Sunseeker é um sistema completo que combina design moderno, funcionalidades interativas e tecnologias avançadas para oferecer uma experiência rica e educativa sobre energia solar. Ele é ideal para demonstrar a viabilidade de sistemas de monitoramento e economia de energia, além de ser um excelente exemplo de aplicação prática de conceitos de desenvolvimento web.
+
+
+
+{
+  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
+  "rules": {
+    ".read": false,
+    ".write": false
+  }
+}
