@@ -13,6 +13,8 @@
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <!-- Firebase Realtime Database -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 </head>
 
 <body>
@@ -23,14 +25,9 @@
         <div class="loading-bar">
             <div class="loading-progress"></div>
         </div>
-        <!--<span id="loading-percent">0%</span>-->
     </div>
 </div>
 
-<!-- Tela de Loading 
-<div id="loading-screen">
-    <img src="imagens/logo.png" alt="Sunseeker Logo" class="logo-pulse">
-</div>-->
   <!-- 🔆 Cadastro -->
   <main class="login-container">
     <div class="login-card">
@@ -41,6 +38,13 @@
       </div>
 
       <form id="registerForm">
+
+                <div class="form-group">
+          <label for="nome"><i class="fas fa-user me-1"></i>Nome completo</label>
+          <input type="text" id="nome" class="form-control" placeholder="Digite seu nome" required>
+        </div>
+
+
         <div class="form-group">
           <label for="email"><i class="fas fa-envelope me-1"></i> E-mail</label>
           <input type="email" id="email" class="form-control" placeholder="Digite seu e-mail" required>
@@ -80,7 +84,6 @@
     </div>
   </main>
 
-  
   <!-- 🔥 Firebase Config + Scripts -->
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -96,6 +99,7 @@
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
+    const database = firebase.database();
 
     // 🔐 Mostrar/Esconder Senha
     function togglePassword() {
@@ -113,7 +117,21 @@
       }
     }
 
-    // 🔥 Cadastro com E-mail e Senha + Verificação
+    // 💾 Função para salvar dados no Realtime Database
+    function salvarDadosUsuario(userId, email, provedor, nome = null) {
+      const userRef = database.ref('usuarios/' + userId);
+      const userData = {
+        email: email,
+        provedor: provedor,
+        dataCadastro: new Date().toISOString(),
+        nome: nome || email.split('@')[0],
+        ultimoAcesso: new Date().toISOString()
+      };
+      
+      return userRef.set(userData);
+    }
+
+    // 🔥 Cadastro com E-mail e Senha + Verificação + Salvamento no BD
     const registerForm = document.getElementById('registerForm');
     registerForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -135,6 +153,16 @@
       auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
           const user = userCredential.user;
+
+          const nome = document.getElementById('nome').value.trim();
+          // Salvar dados no Realtime Database
+          salvarDadosUsuario(user.uid, email, 'email', nome)
+            .then(() => {
+              console.log('Dados do usuário salvos com sucesso!');
+            })
+            .catch((error) => {
+              console.error('Erro ao salvar dados:', error);
+            });
 
           user.sendEmailVerification()
             .then(() => {
@@ -186,14 +214,25 @@
         });
     });
 
-    // 🔥 Cadastro/Login com Google
+    // 🔥 Cadastro/Login com Google + Salvamento no BD
     function loginGoogle() {
       const provider = new firebase.auth.GoogleAuthProvider();
       auth.signInWithPopup(provider)
         .then(result => {
+          const user = result.user;
+          
+          // Salvar dados no Realtime Database
+          salvarDadosUsuario(user.uid, user.email, 'google', user.displayName)
+            .then(() => {
+              console.log('Dados do usuário Google salvos com sucesso!');
+            })
+            .catch((error) => {
+              console.error('Erro ao salvar dados:', error);
+            });
+
           Swal.fire({
             icon: 'success',
-            title: `Bem-vindo ${result.user.displayName}`,
+            title: `Bem-vindo ${user.displayName}`,
             confirmButtonColor: '#3085d6'
           }).then(() => {
             window.location.href = 'index.html';
@@ -213,9 +252,6 @@
 
   <!-- Bootstrap Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
-  
 
 </body>
 <script src="JS/loading.js"></script>
