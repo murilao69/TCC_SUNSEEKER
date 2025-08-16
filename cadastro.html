@@ -17,6 +17,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
   <!-- Firebase Cloud Firestore -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
 </head>
 
 <body>
@@ -102,6 +103,7 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const database = firebase.database();
+    const firestore = firebase.firestore(); // Initialize Firestore
 
     // 🔐 Mostrar/Esconder Senha
     function togglePassword() {
@@ -131,6 +133,17 @@
       };
       
       return userRef.set(userData);
+    }
+
+    // 💾 Função para salvar dados no Cloud Firestore
+    function salvarDadosUsuarioFirestore(userId, email, provedor, nome = null) {
+      return firestore.collection('usuarios').doc(userId).set({
+        email: email,
+        provedor: provedor,
+        dataCadastro: new Date().toISOString(),
+        nome: nome || email.split('@')[0],
+        ultimoAcesso: new Date().toISOString()
+      });
     }
 
     // 🔥 Cadastro com E-mail e Senha + Verificação + Salvamento no BD
@@ -164,6 +177,15 @@
             })
             .catch((error) => {
               console.error('Erro ao salvar dados:', error);
+            });
+
+          // Salvar dados no Cloud Firestore
+          salvarDadosUsuarioFirestore(user.uid, email, 'email', nome)
+            .then(() => {
+              console.log('Dados do usuário salvos no Firestore com sucesso!');
+            })
+            .catch((error) => {
+              console.error('Erro ao salvar dados no Firestore:', error);
             });
 
           user.sendEmailVerification()
@@ -230,6 +252,15 @@
             })
             .catch((error) => {
               console.error('Erro ao salvar dados:', error);
+            });
+
+          // Salvar dados no Cloud Firestore
+          salvarDadosUsuarioFirestore(user.uid, user.email, 'google', user.displayName)
+            .then(() => {
+              console.log('Dados do usuário Google salvos no Firestore com sucesso!');
+            })
+            .catch((error) => {
+              console.error('Erro ao salvar dados no Firestore:', error);
             });
 
           Swal.fire({
