@@ -23,12 +23,6 @@
 
 <body>
 
-
-<!-- Tela de Loading 
-<div id="loading-screen">
-    <img src="imagens/logo.png" alt="Sunseeker Logo" class="logo-pulse">
-</div>-->
-
   <!-- 🔆 Login -->
   <main class="login-container">
     <div class="login-card">
@@ -144,10 +138,18 @@
 
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value.trim();
+      const remember = document.getElementById('remember').checked;
 
       auth.signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
           const user = userCredential.user;
+
+          // Salvar ou limpar e-mail no localStorage
+          if (remember) {
+            localStorage.setItem('rememberedEmail', email);
+          } else {
+            localStorage.removeItem('rememberedEmail');
+          }
 
           if (user.emailVerified) {
             Swal.fire({
@@ -190,6 +192,15 @@
             title: 'E-mail ou senha incorretos ou conta não cadastrada.',
           });
         });
+    });
+
+    // 📨 Preencher e-mail salvo ao carregar a página
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedEmail = localStorage.getItem('rememberedEmail');
+      if (savedEmail) {
+        document.getElementById('email').value = savedEmail;
+        document.getElementById('remember').checked = true;
+      }
     });
   </script>
 
