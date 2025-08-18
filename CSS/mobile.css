@@ -1,5 +1,0 @@
-@media (max-width: 768px) {
-    .position-absolute:has(img[src="imagens/index_foto.jpg"]) {
-      display: none !important;
-    }
-  }
