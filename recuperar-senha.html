@@ -84,7 +84,8 @@
             icon: 'success',
             title: 'Link enviado!',
             text: 'Um link de recuperação foi enviado para seu e-mail. Confira sua caixa de entrada ou spam!',
-            confirmButtonText: 'OK'
+            confirmButtonText: 'OK',
+            timer: 5000
           }).then(() => {
             window.location.href = 'login.html';
           });
@@ -95,7 +96,8 @@
             Swal.fire({
               icon: 'warning',
               title: 'E-mail não encontrado!',
-              text: 'Verifique se digitou corretamente.'
+              text: 'Verifique se digitou corretamente.',
+              timer:3000
             });
           } else if (error.code === 'auth/invalid-email') {
             Swal.fire({
@@ -107,7 +109,7 @@
             Swal.fire({
               icon: 'error',
               title: 'Erro',
-      
+              timer:3000
             });
           }
         });

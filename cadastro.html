@@ -194,7 +194,8 @@
                 icon: 'success',
                 title: 'Conta criada com sucesso!',
                 text: 'Verifique seu e-mail antes de fazer login.',
-                confirmButtonColor: '#3085d6'
+                confirmButtonColor: '#3085d6',
+                timer:5000
               }).then(() => {
                 auth.signOut();
                 window.location.href = 'login.html';
