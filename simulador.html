@@ -70,6 +70,19 @@
             class="fas fa-calculator me-2"></i><span>Simulador</span></a></div>
       <div class="nav-item"><a href="sobre.html" class="nav-button"><i
             class="fas fa-info-circle me-2"></i><span>Sobre</span></a></div>
+
+      <div class="nav-item dropdown">
+        <a class="nav-button dropdown-toggle" href="#" id="accessibilityDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+          <i class="fas fa-universal-access me-2"></i>
+          <span>Acessibilidade</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accessibilityDropdown">
+          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
+          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
+          <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
+        </ul>
+      </div>
+
       <div class="nav-item dropdown">
         <a class="nav-button dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
@@ -118,6 +131,18 @@
         <i class="fas fa-calculator me-2"></i>
         <span>Simulador</span>
       </a>
+      <div class="nav-item dropdown">
+        <a class="nav-button dropdown-toggle" href="#" id="mobileAccessibilityDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+          <i class="fas fa-universal-access me-2"></i>
+          <span>Acessibilidade</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileAccessibilityDropdown">
+          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
+          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
+          <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
+        </ul>
+      </div>
+
       <div class="nav-item dropdown">
         <a class="nav-button dropdown-toggle" href="#" id="mobileNavbarDropdown" role="button"
           data-bs-toggle="dropdown" aria-expanded="false">
@@ -331,6 +356,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script src="JS/cabeçalho.js"></script>
+<script src="JS/acessibilidade.js"></script>
 <script src="JS/loading.js"></script>
 </body>
 

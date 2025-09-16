@@ -69,6 +69,19 @@
     <div class="nav-item"><a href="produtos.html" class="nav-button"><i class="fas fa-box me-2"></i><span>Produtos</span></a></div>
     <div class="nav-item"><a href="simulador.html" class="nav-button"><i class="fas fa-calculator me-2"></i><span>Simulador</span></a></div>
     <div class="nav-item"><a href="sobre.html" class="nav-button active"><i class="fas fa-info-circle me-2"></i><span>Sobre</span></a></div>
+
+    <div class="nav-item dropdown">
+      <a class="nav-button dropdown-toggle" href="#" id="accessibilityDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+        <i class="fas fa-universal-access me-2"></i>
+        <span>Acessibilidade</span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accessibilityDropdown">
+        <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
+        <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
+        <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
+      </ul>
+    </div>
+
     <div class="nav-item dropdown">
       <a class="nav-button dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         <i class="fas fa-cog me-2"></i><span>Configurações</span>
@@ -80,7 +93,26 @@
       </ul>
     </div>
   </nav>
+
+  <!-- Botão Menu Mobile -->
+  <button class="d-lg-none mobile-menu-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+  </button>
 </header>
+
+<!-- Menu Mobile Colapsável -->
+<div class="collapse mobile-nav d-lg-none" id="mobileNav">
+  <div class="container-fluid py-3"></div>
+    <nav class="d-flex flex-column gap-2">
+      <a href="inicio.html" class="nav-button"><i class="fas fa-home me-2"></i><span>Início</span></a>
+      <a href="solucoes.html" class="nav-button"><i class="fas fa-lightbulb me-2"></i><span>Soluções</span></a>
+      <a href="produtos.html" class="nav-button"><i class="fas fa-box me-2"></i><span>Produtos</span></a>
+      <a href="simulador.html" class="nav-button"><i class="fas fa-calculator me-2"></i><span>Simulador</span></a>
+      <a href="sobre.html" class="nav-button active"><i class="fas fa-info-circle me-2"></i><span>Sobre</span></a>
+      <!-- Repetir os dropdowns aqui -->
+    </nav>
+  </div>
+</div>
 
 <!-- 🧾 Conteúdo principal -->
 <main class="container my-5">
@@ -217,6 +249,7 @@ function toggleTheme() {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="JS/cabeçalho.js"></script>
+<script src="JS/acessibilidade.js"></script>
 <script src="JS/loading.js"></script>
 </body>
 </html>
