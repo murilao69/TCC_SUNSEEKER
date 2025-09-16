@@ -76,27 +76,26 @@
           <i class="fas fa-universal-access me-2"></i>
           <span>Acessibilidade</span>
         </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accessibilityDropdown">
+        <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="accessibilityDropdown">
+          <li><h6 class="dropdown-header">Tamanho da Fonte (Atalhos: Alt + / Alt -)</h6></li>
+          <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte</a></li>
+          <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte</a></li>
+          <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
           <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeText">Modo Escuro</span></a></li>
           <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
         </ul>
       </div>
 
       <div class="nav-item dropdown">
-        <a class="nav-button dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          <i class="fas fa-cog me-2"></i>
-          <span>Configurações</span>
+        <a class="nav-button dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fas fa-user-cog me-2"></i>
+          <span>Conta</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span
-                id="themeText">Modo Escuro</span></a></li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Sair da
-              Conta</a></li>
+            <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Sair da Conta</a></li>
         </ul>
       </div>
     </nav>
@@ -136,29 +135,25 @@
           <i class="fas fa-universal-access me-2"></i>
           <span>Acessibilidade</span>
         </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileAccessibilityDropdown">
-          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
-          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
+        <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="mobileAccessibilityDropdown">
+            <li><h6 class="dropdown-header">Tamanho da Fonte (Atalhos: Alt + / Alt -)</h6></li>
+            <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte</a></li>
+            <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
+            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeTextMobile">Modo Escuro</span></a></li>
           <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
         </ul>
       </div>
 
       <div class="nav-item dropdown">
-        <a class="nav-button dropdown-toggle" href="#" id="mobileNavbarDropdown" role="button"
-          data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="fas fa-cog me-2"></i>
-          <span>Configurações</span>
+        <a class="nav-button dropdown-toggle" href="#" id="mobileNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fas fa-user-cog me-2"></i>
+          <span>Conta</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileNavbarDropdown">
-          <li>
-            <a class="dropdown-item" href="#" onclick="toggleTheme()">
-              <i class="fas fa-moon me-2"></i>
-              <span id="themeText">Modo Escuro</span> / <span id="lightThemeText">Modo Claro</span>
-            </a>
-          </li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
           <li>
             <a class="dropdown-item" href="#" onclick="logout()">
               <i class="fas fa-sign-out-alt me-2"></i> Sair da Conta
@@ -254,15 +249,14 @@
   </main>
 
   <!-- 🦶 RODAPÉ -->
-<footer class="py-4">
+
+<footer class="py-4" style="background-color: #2c3e50; color: white;">
   <div class="container row row-cols-1 row-cols-md-4 g-4">
-    
     <!-- Contato -->
     <div>
       <h6>Contato e Suporte</h6>
       <p>Email: contato@sunseeker.com<br>WhatsApp: (11) 99727-4119</p>
     </div>
-    
     <!-- Links rápidos -->
     <div>
       <h6>Links rápidos</h6>
@@ -274,27 +268,22 @@
         <li><a href="sobre.html" class="text-white text-decoration-underline">Sobre</a></li>
       </ul>
     </div>
-    
     <!-- Redes sociais -->
     <div>
       <h6>Redes Sociais</h6>
       <p>Instagram | LinkedIn | YouTube</p>
     </div>
-  </div>
-
-<div class="py-4">
-  <div style="color: white;background-color: #2c3e50;">
- <!-- Direitos autorais + descrição + aviso legal -->
-    <div class="text-center">
+    <!-- Direitos autorais + descrição + aviso legal -->
+    <div class="text-center col-12 mt-4">
       <p class="mb-1">© 2025 Sunseeker. Todos os direitos reservados.</p>
       <p class="mb-1">Sistema de monitoramento e análise de geração de energia solar em tempo real.</p>
       <br>
-      <small >
+      <small>
         Aviso: Os dados exibidos são estimativas baseadas nos sensores do sistema e podem variar.
       </small>
     </div>
   </div>
-</div></footer>
+</footer>
 
 
   <script>

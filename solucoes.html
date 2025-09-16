@@ -103,9 +103,15 @@
                 <i class="fas fa-universal-access me-2"></i>
                 <span>Acessibilidade</span>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accessibilityDropdown">
+              <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="accessibilityDropdown">
+                <li><h6 class="dropdown-header">Tamanho da Fonte (Atalhos: Alt + / Alt -)</h6></li>
+                <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte</a></li>
+                <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte</a></li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
                 <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeText">Modo Escuro</span></a></li>
                 <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
               </ul>
             </div>
@@ -113,12 +119,10 @@
 
 <div class="nav-item dropdown">
     <a class="nav-button dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fas fa-cog me-2"></i>
-        <span>Configurações</span>
+        <i class="fas fa-user-cog me-2"></i>
+        <span>Conta</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeText">Modo Escuro</span></a></li>
-        <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Sair da Conta</a></li>
     </ul>
 </div>
@@ -159,29 +163,25 @@
           <i class="fas fa-universal-access me-2"></i>
           <span>Acessibilidade</span>
         </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileAccessibilityDropdown">
-          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
-          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
+        <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="mobileAccessibilityDropdown">
+            <li><h6 class="dropdown-header">Tamanho da Fonte (Atalhos: Alt + / Alt -)</h6></li>
+            <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte</a></li>
+            <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
+            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeTextMobile">Modo Escuro</span></a></li>
           <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
         </ul>
       </div>
 
       <div class="nav-item dropdown">
-        <a class="nav-button dropdown-toggle" href="#" id="mobileNavbarDropdown" role="button"
-          data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="fas fa-cog me-2"></i>
-          <span>Configurações</span>
+        <a class="nav-button dropdown-toggle" href="#" id="mobileNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fas fa-user-cog me-2"></i>
+          <span>Conta</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileNavbarDropdown">
-          <li>
-            <a class="dropdown-item" href="#" onclick="toggleTheme()">
-              <i class="fas fa-moon me-2"></i>
-              <span id="themeText">Modo Escuro</span> / <span id="lightThemeText">Modo Claro</span>
-            </a>
-          </li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
           <li>
             <a class="dropdown-item" href="#" onclick="logout()">
               <i class="fas fa-sign-out-alt me-2"></i> Sair da Conta
