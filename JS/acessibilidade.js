@@ -13,6 +13,9 @@ function toggleLetterSpacing(increase) {
     } else {
         document.body.classList.remove('increase-letter-spacing');
     }
+
+
+
 }
 
 /**
@@ -57,9 +60,9 @@ function readPageAloud() {
 function changeFontSize(action) {
     const step = 0.1;
     if (action === 'increase') {
-        currentFontSize = Math.min(currentFontSize + step, 1.5); // Limite máximo de 150%
+        currentFontSize = Math.min(currentFontSize + step, 3.0); // Limite máximo de 150%
     } else if (action === 'decrease') {
-        currentFontSize = Math.max(currentFontSize - step, 0.7); // Limite mínimo de 70%
+        currentFontSize = Math.max(currentFontSize - step, 0.5); // Limite mínimo de 70%
     } else { // reset
         currentFontSize = 1;
     }
@@ -75,7 +78,7 @@ document.addEventListener('keydown', (event) => {
     if (event.altKey) {
         switch (event.key) {
             case '+':
-            case '=': // O '+' geralmente é a mesma tecla do '='
+            case '=': // O + geralmente é a mesma tecla do =
                 event.preventDefault();
                 changeFontSize('increase');
                 break;
