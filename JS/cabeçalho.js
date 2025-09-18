@@ -23,6 +23,11 @@ function toggleTheme() {
     
     // Salvar preferência no localStorage
     localStorage.setItem('theme', newTheme);
+
+    // Se a função drawCharts existir (estamos na página inicio.html), redesenhe os gráficos
+    if (typeof drawCharts === 'function') {
+        drawCharts();
+    }
     
     // Atualizar ícones e textos (desktop)
     const themeIcon = document.getElementById('themeIcon');

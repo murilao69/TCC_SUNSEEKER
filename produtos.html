@@ -103,15 +103,17 @@
           <span>Acessibilidade</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="accessibilityDropdown">
-          <li><h6 class="dropdown-header">Tamanho da Fonte (Atalhos: Alt + / Alt -)</h6></li>
-          <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte</a></li>
-          <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte</a></li>
+          <li><h6 class="dropdown-header">Atalhos de Teclado</h6></li>
+          <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte (Alt +)</a></li>
+          <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte (Alt -)</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
-          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
+          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento (Alt L)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento (Alt L)</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeText">Modo Escuro</span></a></li>
-          <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
+          <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta (Alt R)</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#" onclick="resetAccessibility()"><i class="fas fa-undo me-2" style="color: #ff6b35;"></i> Resetar (Alt 0)</a></li>
         </ul>
       </div>
 
@@ -164,15 +166,17 @@
           <span>Acessibilidade</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="mobileAccessibilityDropdown">
-            <li><h6 class="dropdown-header">Tamanho da Fonte (Atalhos: Alt + / Alt -)</h6></li>
-            <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte</a></li>
-            <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte</a></li>
+            <li><h6 class="dropdown-header">Atalhos de Teclado</h6></li>
+            <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte (Alt +)</a></li>
+            <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte (Alt -)</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
+            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento (Alt L)</a></li>
             <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeTextMobile">Modo Escuro</span></a></li>
-          <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
+            <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta (Alt R)</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="resetAccessibility()"><i class="fas fa-undo me-2" style="color: #ff6b35;"></i> Resetar (Alt 0)</a></li>
         </ul>
       </div>
 
@@ -201,7 +205,7 @@
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
           <div class="card h-100">
-            <img src="imagens/painelSolar.jpg" class="card-img-top" alt="Painel Solar">
+            <img src="imagens/painelSolar.jpg" class="card-img-top" alt="Painel solar fotovoltaico com células monocristalinas azuis escuras.">
             <div class="card-body">
               <h5 class="card-title">Painel 450W Mono</h5>
               <p class="card-text">Alta eficiência para aplicações residenciais e comerciais.</p>
@@ -221,7 +225,7 @@
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
           <div class="card h-100">
-            <img src="imagens/inversor.jpg" class="card-img-top" alt="Inversor">
+            <img src="imagens/inversor.jpg" class="card-img-top" alt="Inversor de energia solar branco, fixado em uma parede.">
             <div class="card-body">
               <h5 class="card-title">Inversor 5kW Trifásico</h5>
               <p class="card-text">Ideal para sistemas comerciais com alta demanda energética.</p>
@@ -241,7 +245,7 @@
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
           <div class="card h-100">
-            <img src="imagens/bateria.jpg" class="card-img-top" alt="Bateria de Lítio">
+            <img src="imagens/bateria.jpg" class="card-img-top" alt="Bateria de armazenamento de energia de lítio, modelo de parede.">
             <div class="card-body">
               <h5 class="card-title">Bateria de Lítio 10kWh</h5>
               <p class="card-text">Energia para uso noturno e emergências com máxima segurança.</p>
@@ -261,7 +265,7 @@
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
           <div class="card h-100">
-            <img src="imagens/caboefio.jpg" class="card-img-top" alt="Cabos e conectores">
+            <img src="imagens/caboefio.jpg" class="card-img-top" alt="Rolos de cabos solares preto e vermelho com conectores do tipo MC4.">
             <div class="card-body">
               <h5 class="card-title">Cabos e Conectores MC4</h5>
               <p class="card-text">Itens de alta resistência e compatibilidade para instalação solar.</p>
@@ -281,7 +285,7 @@
       <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
           <div class="card h-100">
-            <img src="imagens/atendimento espec.jpg" class="card-img-top" alt="Suporte Técnico">
+            <img src="imagens/atendimento espec.jpg" class="card-img-top" alt="Técnico sorridente com capacete de segurança e fones de ouvido, representando o suporte ao cliente.">
             <div class="card-body">
               <h5 class="card-title">Assistência Especializada</h5>
               <p class="card-text">Instalação, manutenção e diagnóstico profissional em todo o Brasil.</p>

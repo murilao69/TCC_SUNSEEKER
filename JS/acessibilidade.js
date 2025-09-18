@@ -2,13 +2,14 @@
 // ACESSIBILIDADE
 // =========================
 let currentFontSize = 1; // 1 = normal, >1 = aumentado, <1 = diminuído
+let letterSpacingEnabled = false;
 
 /**
  * Aumenta ou diminui o espaçamento entre letras no corpo do documento.
  * @param {boolean} increase - `true` para aumentar, `false` para diminuir/remover.
  */
 function toggleLetterSpacing(increase) {
-    if (increase) {
+    if (increase) { 
         document.body.classList.add('increase-letter-spacing');
     } else {
         document.body.classList.remove('increase-letter-spacing');
@@ -16,6 +17,15 @@ function toggleLetterSpacing(increase) {
 
 
 
+}
+
+/**
+ * Reseta as configurações de acessibilidade para o padrão.
+ */
+function resetAccessibility() {
+    changeFontSize('reset');
+    toggleLetterSpacing(false);
+    letterSpacingEnabled = false;
 }
 
 /**
@@ -85,6 +95,21 @@ document.addEventListener('keydown', (event) => {
             case '-':
                 event.preventDefault();
                 changeFontSize('decrease');
+                break;
+            case '0':
+                event.preventDefault();
+                resetAccessibility();
+                break;
+            case 'l':
+            case 'L':
+                event.preventDefault();
+                letterSpacingEnabled = !letterSpacingEnabled;
+                toggleLetterSpacing(letterSpacingEnabled);
+                break;
+            case 'r':
+            case 'R':
+                event.preventDefault();
+                readPageAloud();
                 break;
         }
     }

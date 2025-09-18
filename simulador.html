@@ -77,15 +77,17 @@
           <span>Acessibilidade</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="accessibilityDropdown">
-          <li><h6 class="dropdown-header">Tamanho da Fonte (Atalhos: Alt + / Alt -)</h6></li>
-          <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte</a></li>
-          <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte</a></li>
+          <li><h6 class="dropdown-header">Atalhos de Teclado</h6></li>
+          <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte (Alt +)</a></li>
+          <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte (Alt -)</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
-          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
+          <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento (Alt L)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento (Alt L)</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeText">Modo Escuro</span></a></li>
-          <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
+          <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta (Alt R)</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#" onclick="resetAccessibility()"><i class="fas fa-undo me-2" style="color: #ff6b35;"></i> Resetar (Alt 0)</a></li>
         </ul>
       </div>
 
@@ -136,15 +138,17 @@
           <span>Acessibilidade</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="mobileAccessibilityDropdown">
-            <li><h6 class="dropdown-header">Tamanho da Fonte (Atalhos: Alt + / Alt -)</h6></li>
-            <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte</a></li>
-            <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte</a></li>
+            <li><h6 class="dropdown-header">Atalhos de Teclado</h6></li>
+            <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte (Alt +)</a></li>
+            <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte (Alt -)</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
+            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento (Alt L)</a></li>
             <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeTextMobile">Modo Escuro</span></a></li>
-          <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
+            <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta (Alt R)</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="resetAccessibility()"><i class="fas fa-undo me-2" style="color: #ff6b35;"></i> Resetar (Alt 0)</a></li>
         </ul>
       </div>
 

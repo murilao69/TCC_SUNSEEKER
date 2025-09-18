@@ -32,6 +32,24 @@
     padding-bottom: 0.5rem;
     margin-bottom: 2rem;
   }
+
+  .dashboard-card {
+    height: 400px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  }
+
+  /* Estilos para o modo escuro */
+  [data-theme="dark"] .dashboard-card {
+    background-color: #2c3e50; /* Cor de fundo escura para os cards */
+  }
+
+  [data-theme="dark"] .dashboard-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  }
 </style>
 <body>
 <!-- Tela de Loading -->
@@ -100,15 +118,17 @@
             <span>Acessibilidade</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="accessibilityDropdown">
-            <li><h6 class="dropdown-header">Tamanho da Fonte (Atalhos: Alt + / Alt -)</h6></li>
+            <li><h6 class="dropdown-header">Atalhos de Teclado</h6></li>
             <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte</a></li>
             <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
+            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento (Alt L)</a></li>
             <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeText">Modo Escuro</span></a></li>
-            <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
+            <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta (Alt R)</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="resetAccessibility()"><i class="fas fa-undo me-2" style="color: #ff6b35;"></i> Resetar (Alt 0)</a></li>
           </ul>
         </div>
 
@@ -159,15 +179,17 @@
           <span>Acessibilidade</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="mobileAccessibilityDropdown">
-            <li><h6 class="dropdown-header">Tamanho da Fonte (Atalhos: Alt + / Alt -)</h6></li>
-            <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte</a></li>
-            <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte</a></li>
+            <li><h6 class="dropdown-header">Atalhos de Teclado</h6></li>
+            <li><a class="dropdown-item" href="#" onclick="changeFontSize('increase')"><i class="fas fa-search-plus me-2"></i> Aumentar Fonte (Alt +)</a></li>
+            <li><a class="dropdown-item" href="#" onclick="changeFontSize('decrease')"><i class="fas fa-search-minus me-2"></i> Diminuir Fonte (Alt -)</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento</a></li>
-            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
+            <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento (Alt L)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento (Alt L)</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeTextMobile">Modo Escuro</span></a></li>
-          <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta</a></li>
+            <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta (Alt R)</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="resetAccessibility()"><i class="fas fa-undo me-2" style="color: #ff6b35;"></i> Resetar (Alt 0)</a></li>
         </ul>
       </div>
 
@@ -197,19 +219,19 @@
       <div class="row g-4">
         <!-- 📈 Linha -->
         <div class="col-md-6">
-          <div class="dashboard-card" id="grafico-linha" style="height: 400px; border-radius: 20px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.3s, box-shadow 0.3s;"></div>
+          <div class="dashboard-card" id="grafico-linha"></div>
         </div>
         <!-- 🟠 Pizza -->
         <div class="col-md-6">
-          <div class="dashboard-card" id="grafico-pizza" style="height: 400px; border-radius: 20px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.3s, box-shadow 0.3s;"></div>
+          <div class="dashboard-card" id="grafico-pizza"></div>
         </div>
         <!-- 📊 Coluna -->
         <div class="col-md-6">
-          <div class="dashboard-card" id="grafico-coluna" style="height: 400px; border-radius: 20px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.3s, box-shadow 0.3s;"></div>
+          <div class="dashboard-card" id="grafico-coluna"></div>
         </div>
         <!-- 📉 Barra -->
         <div class="col-md-6">
-          <div class="dashboard-card" id="grafico-barra" style="height: 400px; border-radius: 20px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform 0.3s, box-shadow 0.3s;"></div>
+          <div class="dashboard-card" id="grafico-barra"></div>
         </div>
       </div>
     </section>
@@ -224,6 +246,7 @@
     function drawCharts() {
       // 📈 Linha
       const linhaData = google.visualization.arrayToDataTable([
+                
         ['Mês', 'Economia (kWh)'],
         ['Jan', 320], ['Fev', 500], ['Mar', 820], ['Abr', 740], ['Mai', 920], ['Jun', 350]
       ]);
@@ -238,10 +261,7 @@
       // 🟠 Pizza
       const pizzaData = google.visualization.arrayToDataTable([
         ['Tipo', 'Instalações'],
-        ['Residencial', 50],
-        ['Comercial', 35],
-        ['Industrial', 25],
-        ['Outros', 15]
+        ['Residencial', 50], ['Comercial', 35], ['Industrial', 25], ['Outros', 15]
       ]);
       const pizzaOptions = {
         title: 'Tipos de Instalações',
@@ -253,22 +273,18 @@
       // 📊 Coluna
       const colunaData = google.visualization.arrayToDataTable([
         ['Casa', 'Sem Painel', 'Com Painel'],
-        ['Casa 1', 1000, 400],
-        ['Casa 2', 950, 380],
-        ['Casa 3', 1100, 450],
+        ['Casa 1', 1000, 400], ['Casa 2', 950, 380], ['Casa 3', 1100, 450],
       ]);
       const colunaOptions = {
         title: 'Consumo: Sem vs Com Painel',
-        colors: ['#000000', '#FFDE59']
+        colors: ['#6c757d', '#FFDE59']
       };
       new google.visualization.ColumnChart(document.getElementById('grafico-coluna')).draw(colunaData, colunaOptions);
 
       // 📉 Barras
       const barraData = google.visualization.arrayToDataTable([
         ['Ano', 'Antes', 'Depois'],
-        ['2022', 1250, 550],
-        ['2023', 1100, 420],
-        ['2024', 1180, 500],
+        ['2022', 1250, 550], ['2023', 1100, 420], ['2024', 1180, 500],
       ]);
       const barraOptions = {
         title: 'Histórico de Consumo',
@@ -277,6 +293,7 @@
       };
       new google.visualization.BarChart(document.getElementById('grafico-barra')).draw(barraData, barraOptions);
     }
+
   </script>
   
 <!-- 🦶 RODAPÉ -->
