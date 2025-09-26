@@ -16,7 +16,7 @@
 // =========================
 function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark'; // Alterna entre claro e escuro
     
     // Aplicar o novo tema
     document.documentElement.setAttribute('data-theme', newTheme);
@@ -66,6 +66,20 @@ function toggleTheme() {
             themeTextMobile.textContent = 'Modo Escuro';
         }
     }
+}
+
+function toggleContrast() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'contrast' ? 'light' : 'contrast';
+
+    // Aplicar o novo tema
+    document.documentElement.setAttribute('data-theme', newTheme);
+
+    // Salvar preferência no localStorage
+    localStorage.setItem('theme', newTheme);
+
+    // Atualiza os ícones e textos para refletir o estado atual
+    updateThemeUI(newTheme);
 }
 
 // =========================
@@ -138,11 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     
-    // Atualizar ícones e textos baseado no tema inicial
-    const themeIcon = document.getElementById('themeIcon');
-    const themeText = document.getElementById('themeText');
-    const themeIconMobile = document.getElementById('themeIconMobile');
-    const themeTextMobile = document.getElementById('themeTextMobile');
+    updateThemeUI(savedTheme);
     
     if (savedTheme === 'dark') {
         if (themeIcon) {
@@ -172,8 +182,38 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-
 });
+
+function updateThemeUI(theme) {
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    const themeIconMobile = document.getElementById('themeIconMobile');
+    const themeTextMobile = document.getElementById('themeTextMobile');
+
+    if (theme === 'dark') {
+        if (themeIcon) themeIcon.className = 'fas fa-sun me-2';
+        if (themeText) themeText.textContent = 'Modo Claro';
+        if (themeIconMobile) themeIconMobile.className = 'fas fa-sun me-2';
+        if (themeTextMobile) themeTextMobile.textContent = 'Modo Claro';
+    } else { // light ou contrast
+        if (themeIcon) themeIcon.className = 'fas fa-moon me-2';
+        if (themeText) themeText.textContent = 'Modo Escuro';
+        if (themeIconMobile) themeIconMobile.className = 'fas fa-moon me-2';
+        if (themeTextMobile) themeTextMobile.textContent = 'Modo Escuro';
+    }
+
+    // O texto do botão de alto contraste não precisa mudar
+    const contrastIcon = document.getElementById('contrastIcon');
+    const contrastIconMobile = document.getElementById('contrastIconMobile');
+
+    if (theme === 'contrast') {
+        if (contrastIcon) contrastIcon.className = 'fas fa-toggle-on me-2';
+        if (contrastIconMobile) contrastIconMobile.className = 'fas fa-toggle-on me-2';
+    } else {
+        if (contrastIcon) contrastIcon.className = 'fas fa-toggle-off me-2';
+        if (contrastIconMobile) contrastIconMobile.className = 'fas fa-toggle-off me-2';
+    }
+}
 
 
 //elemento de registro do Service Worker

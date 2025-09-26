@@ -8,7 +8,7 @@
   <!-- Bootstrap + CSS personalizado -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-papm6kQz9Qc1Q6r5Q6r5Q6r5Q6r5Q6r5Q6r5Q6r5Q6r5Q6r5Q6r5Q6r5Q6r5Q6r5Q6r5Q6r5Q6r5Q6r5Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="CSS/loading.css">
@@ -29,7 +29,7 @@
       background-color: #f8f9fa;
       color: #000;
     }
-    #contact-form.dark-mode {
+      #contact-form.dark-mode {
       background-color: #2c2c2c;
       color: #fff;
       border-color: #444;
@@ -46,6 +46,29 @@
       border-bottom: 2px solid #ffc107;
       padding-bottom: 0.5rem;
       margin-bottom: 2rem;
+    }
+
+    /* Estilos para o modo escuro */
+    [data-theme="dark"] #contact-form {
+      background-color: #2c3e50; /* Cor de fundo escura para o formulário */
+      color: #fff;
+      border-color: #444;
+    }
+
+    [data-theme="dark"] #contact-form .form-label,
+    [data-theme="dark"] #contact-form .form-control {
+        color: #fff;
+    }
+
+    [data-theme="dark"] .form-control {
+        background-color: #34495e;
+        border-color: #444;
+        color: #fff; /* Cor do texto digitado */
+    }
+
+    /* Cor do placeholder no modo escuro */
+    [data-theme="dark"] .form-control::placeholder {
+        color: #bdc3c7;
     }
   </style>
 </head>
@@ -85,6 +108,7 @@
         <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento (Alt L)</a></li>
                 <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento (Alt L)</a></li>
         <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#" onclick="toggleContrast()"><i id="contrastIcon" class="fas fa-toggle-off me-2"></i> Alto Contraste</a></li>
         <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeText">Modo Escuro</span></a></li>
         <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta (Alt R)</a></li>
         <li><hr class="dropdown-divider"></li>
@@ -131,6 +155,7 @@
             <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(true)"><i class="fas fa-text-width me-2"></i> Aumentar Espaçamento (Alt L)</a></li>
             <li><a class="dropdown-item" href="#" onclick="toggleLetterSpacing(false)"><i class="fas fa-text-height me-2"></i> Diminuir Espaçamento</a></li>
             <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="toggleContrast()"><i id="contrastIconMobile" class="fas fa-toggle-off me-2"></i> Alto Contraste</a></li>
             <li><a class="dropdown-item" href="#" onclick="toggleTheme()"><i class="fas fa-moon me-2"></i> <span id="themeTextMobile">Modo Escuro</span></a></li>
             <li><a class="dropdown-item" href="#" onclick="readPageAloud()"><i class="fas fa-volume-up me-2"></i> Ler em Voz Alta (Alt R)</a></li>
             <li><hr class="dropdown-divider"></li>
@@ -203,46 +228,37 @@
 
 <!-- 🦶 RODAPÉ -->
 <footer class="py-4">
-  <div class="container row row-cols-1 row-cols-md-4 g-4">
-    
-    <!-- Contato -->
-    <div>
-      <h6>Contato e Suporte</h6>
-      <p>Email: contato@sunseeker.com<br>WhatsApp: (11) 99727-4119</p>
-    </div>
-    
-    <!-- Links rápidos -->
-    <div>
-      <h6>Links rápidos</h6>
-      <ul class="list-unstyled">
-        <li><a href="inicio.html" class="text-white text-decoration-underline">Início</a></li>
-        <li><a href="solucoes.html" class="text-white text-decoration-underline">Soluções</a></li>
-        <li><a href="produtos.html" class="text-white text-decoration-underline">Produtos</a></li>
-        <li><a href="simulador.html" class="text-white text-decoration-underline">Simulador</a></li>
-        <li><a href="sobre.html" class="text-white text-decoration-underline">Sobre</a></li>
-      </ul>
-    </div>
-    
-    <!-- Redes sociais -->
-    <div>
-      <h6>Redes Sociais</h6>
-      <p>Instagram | LinkedIn | YouTube</p>
-    </div>
-  </div>
-
-<div class="py-4">
-  <div style="color: white;background-color: #2c3e50;">
- <!-- Direitos autorais + descrição + aviso legal -->
-    <div class="text-center">
-      <p class="mb-1">© 2025 Sunseeker. Todos os direitos reservados.</p>
-      <p class="mb-1">Sistema de monitoramento e análise de geração de energia solar em tempo real.</p>
-      <br>
-      <small >
-        Aviso: Os dados exibidos são estimativas baseadas nos sensores do sistema e podem variar.
-      </small>
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <!-- Contato -->
+      <div class="col">
+        <h6>Contato e Suporte</h6>
+        <p>Email: contato@sunseeker.com<br>WhatsApp: (11) 99727-4119</p>
+      </div>
+      <!-- Links rápidos -->
+      <div class="col">
+        <h6>Links rápidos</h6>
+        <ul class="list-unstyled">
+          <li><a href="inicio.html">Início</a></li>
+          <li><a href="solucoes.html">Soluções</a></li>
+          <li><a href="produtos.html">Produtos</a></li>
+          <li><a href="simulador.html">Simulador</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+        </ul>
+      </div>
+      <!-- Redes sociais -->
+      <div class="col">
+        <h6>Redes Sociais</h6>
+        <p>Instagram | LinkedIn | YouTube</p>
+      </div>
     </div>
   </div>
-</div></footer>
+  <div class="container text-center pt-4 mt-4 border-top border-secondary">
+    <p class="mb-1">© 2025 Sunseeker. Todos os direitos reservados.</p>
+    <p class="mb-1">Sistema de monitoramento e análise de geração de energia solar em tempo real.</p>
+    <small>Aviso: Os dados exibidos são estimativas baseadas nos sensores do sistema e podem variar.</small>
+  </div>
+</footer>
 <!-- ✅ Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
 <script>
