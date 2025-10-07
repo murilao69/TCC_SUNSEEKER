@@ -168,44 +168,42 @@
       auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-
           const nome = document.getElementById('nome').value.trim();
-          // Salvar dados no Realtime Database
-          salvarDadosUsuario(user.uid, email, 'email', nome)
-            .then(() => {
-              console.log('Dados do usuário salvos com sucesso!');
-            })
-            .catch((error) => {
-              console.error('Erro ao salvar dados:', error);
-            });
 
-          // Salvar dados no Cloud Firestore
-          salvarDadosUsuarioFirestore(user.uid, email, 'email', nome)
-            .then(() => {
-              console.log('Dados do usuário salvos no Firestore com sucesso!');
-            })
-            .catch((error) => {
-              console.error('Erro ao salvar dados no Firestore:', error);
-            });
+          // 1. ATUALIZA O PERFIL DO USUÁRIO NO FIREBASE AUTH COM O NOME
+          user.updateProfile({
+            displayName: nome
+          }).then(() => {
+            console.log("Nome de exibição do usuário atualizado com sucesso:", nome);
 
-          user.sendEmailVerification()
-            .then(() => {
-              Swal.fire({
-                icon: 'success',
-                title: 'Conta criada com sucesso!',
-                text: 'Verifique seu e-mail antes de fazer login.',
-                confirmButtonColor: '#3085d6',
-                timer:5000
-              }).then(() => {
-                auth.signOut();
-                window.location.href = 'login.html';
+            // 2. SALVA OS DADOS ADICIONAIS NOS BANCOS DE DADOS
+            // Salvar dados no Realtime Database
+            salvarDadosUsuario(user.uid, email, 'email', nome)
+              .catch((error) => console.error('Erro ao salvar dados no Realtime DB:', error));
+
+            // Salvar dados no Cloud Firestore
+            salvarDadosUsuarioFirestore(user.uid, email, 'email', nome)
+              .catch((error) => console.error('Erro ao salvar dados no Firestore:', error));
+
+            // 3. ENVIA O E-MAIL DE VERIFICAÇÃO
+            user.sendEmailVerification()
+              .then(() => {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Conta criada com sucesso!',
+                  text: 'Verifique seu e-mail antes de fazer login.',
+                  confirmButtonColor: '#3085d6',
+                  timer: 5000
+                }).then(() => {
+                  auth.signOut();
+                  window.location.href = 'login.html';
+                });
               });
-            })
-            .catch((error) => {
-              console.error('Erro ao enviar e-mail de verificação:', error);
+          }).catch((error) => {
+              console.error("Erro ao atualizar o perfil do usuário:", error);
               Swal.fire({
                 icon: 'error',
-                title: 'Erro ao enviar e-mail de verificação.',
+                title: 'Erro ao salvar nome do usuário.',
                 text: error.message,
                 confirmButtonColor: '#d33'
               });
@@ -246,6 +244,30 @@
         .then(result => {
           const user = result.user;
           
+          // Salvar/Atualizar dados no Realtime Database e Firestore
+          salvarDadosUsuario(user.uid, user.email, 'google', user.displayName);
+          salvarDadosUsuarioFirestore(user.uid, user.email, 'google', user.displayName);
+
+          window.location.href = 'inicio.html';
+        })
+        .catch(error => {
+          console.error(error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Erro no login com Google',
+            text: error.message,
+            confirmButtonColor: '#d33'
+          });
+        });
+    }
+
+    // 🔥 Cadastro/Login com Google + Salvamento no BD
+    function loginGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(result => {
+          const user = result.user;
+          
           // Salvar dados no Realtime Database
           salvarDadosUsuario(user.uid, user.email, 'google', user.displayName)
             .then(() => {
@@ -269,7 +291,7 @@
             title: `Bem-vindo ${user.displayName}`,
             confirmButtonColor: '#3085d6'
           }).then(() => {
-            window.location.href = 'index.html';
+            window.location.href = 'inicio.html';
           });
         })
         .catch(error => {

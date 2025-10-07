@@ -133,15 +133,13 @@
           </ul>
         </div>
 
-<div class="nav-item dropdown">
-    <a class="nav-button dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fas fa-user-cog me-2"></i>
-        <span>Conta</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Sair da Conta</a></li>
-    </ul>
-</div>
+        <!-- Botão de Conta/Perfil que abre o Modal -->
+        <div class="nav-item">
+          <a class="nav-button" href="#" id="userProfileButton" data-bs-toggle="modal" data-bs-target="#userProfileModal">
+            <i class="fas fa-user-cog me-2"></i>
+            <span>Conta</span>
+          </a>
+        </div>
     </nav>
 
     <!-- Botão Menu Mobile -->
@@ -195,19 +193,12 @@
         </ul>
       </div>
 
-      <div class="nav-item dropdown">
-        <a class="nav-button dropdown-toggle" href="#" id="mobileNavbarDropdown" role="button"
-          data-bs-toggle="dropdown" aria-expanded="false">
+      <!-- Botão de Conta/Perfil Mobile que abre o Modal -->
+      <div class="nav-item">
+        <a class="nav-button" href="#" id="mobileUserProfileButton" data-bs-toggle="modal" data-bs-target="#userProfileModal">
           <i class="fas fa-user-cog me-2"></i>
           <span>Conta</span>
         </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileNavbarDropdown">
-          <li>
-            <a class="dropdown-item" href="#" onclick="logout()">
-              <i class="fas fa-sign-out-alt me-2"></i> Sair da Conta
-            </a>
-          </li>
-        </ul>
       </div>
     </nav>
   </div>
@@ -216,7 +207,9 @@
     <!-- 📄 CONTEÚDO -->
   <main class="container my-5">
     <section id="simulador" class="mb-5">
-      <h2 class="fw-bold">Dashboard <i class="fas fa-chart-line ms-2"></i></h2>
+      <h2 class="fw-bold" id="dashboardTitle">
+        Dashboard de <span id="userNameDisplay">...</span> <i class="fas fa-chart-line ms-2"></i>
+      </h2>
       <p>Veja abaixo diferentes formas de visualização da economia de energia com os sistemas da Sunseeker:</p>
       <div class="row g-4">
         <!-- 📈 Linha -->
@@ -330,11 +323,48 @@
     <p class="mb-1">Sistema de monitoramento e análise de geração de energia solar em tempo real.</p>
     <small>Aviso: Os dados exibidos são estimativas baseadas nos sensores do sistema e podem variar.</small>
   </div>
-</footer>
+</footer> 
+
+<!-- Modal de Perfil do Usuário -->
+<div class="modal fade profile-modal" id="userProfileModal" tabindex="-1" aria-labelledby="userProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="userProfileModalLabel">Seu Perfil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img src="imagens/avatar_padrao.png" alt="Foto do Perfil" id="modalProfilePic" class="profile-pic mb-3">
+        <h4 id="modalUserName" class="profile-name">Carregando...</h4>
+        <p id="modalUserEmail" class="profile-email text-muted">carregando.email@...</p>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button type="button" id="modalLogoutButton" class="btn btn-danger">
+          <i class="fas fa-sign-out-alt me-2"></i>Sair da Conta
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
  <!-- ✅ Bootstrap JS -->
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
  <!-- Scripts -->
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCzsKoNUO3pfWXr7kSBfZ3WEls_2TBhWx0",
+      authDomain: "sunseeker-11685.firebaseapp.com",
+      projectId: "sunseeker-11685",
+      storageBucket: "sunseeker-11685.appspot.com",
+      messagingSenderId: "997372628224",
+      appId: "1:997372628224:web:50ccfbfe938a0442bb37e5"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
 <script src="JS/cabeçalho.js"></script>
 <script src="JS/acessibilidade.js"></script>
 <script src="JS/loading.js"></script>
@@ -349,5 +379,6 @@
 <script>
   new window.VLibras.Widget('https://vlibras.gov.br/app');
 </script>
+<script src="JS/perfil.js"></script>
 </body>
 </html>
