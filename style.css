@@ -139,3 +139,15 @@ footer a:hover {
 [data-theme="contrast"] .nav-button i, [data-theme="contrast"] .dropdown-item i {
     color: #ffff00 !important;
 }
+
+
+
+
+/*Perfillllll*/
+.profile-pic-custom {
+  width: 150px; /* Defina a largura desejada */
+  height: 150px; /* Defina a altura  desejada */
+  border-radius: 50%; /* Deixa a imagem redonda */
+  object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+  border: 3px solid #ffc107; /* Adiciona uma borda amarela */
+}

@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Se não houver foto, usa um avatar padrão
                     modalProfilePic.src = 'imagens/avatar_padrao.png'; 
                 }
+                // Adiciona uma classe CSS para estilização
+                modalProfilePic.classList.add('profile-pic-custom');
             }
 
             // Atualiza o nome do usuário no título do Dashboard (página inicial)
@@ -56,8 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
         modalLogoutButton.addEventListener('click', (e) => {
             e.preventDefault();
             // Fecha o modal antes de deslogar
-            const userModal = bootstrap.Modal.getInstance(document.getElementById('userProfileModal'));
-            userModal.hide();
+            const userModalElement = document.getElementById('userProfileModal');
+            const userModal = bootstrap.Modal.getInstance(userModalElement);
+            // Apenas tenta fechar o modal se ele estiver aberto
+            if (userModal) {
+                userModal.hide();
+            }
             logout(); // Chama a função de logout que já existe em cabeçalho.js
         });
     }

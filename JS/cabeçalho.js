@@ -153,34 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.documentElement.setAttribute('data-theme', savedTheme);
     
     updateThemeUI(savedTheme);
-    
-    if (savedTheme === 'dark') {
-        if (themeIcon) {
-            themeIcon.className = 'fas fa-sun me-2';
-        }
-        if (themeText) {
-            themeText.textContent = 'Modo Claro';
-        }
-        if (themeIconMobile) {
-            themeIconMobile.className = 'fas fa-sun me-2';
-        }
-        if (themeTextMobile) {
-            themeTextMobile.textContent = 'Modo Claro';
-        }
-    } else {
-        if (themeIcon) {
-            themeIcon.className = 'fas fa-moon me-2';
-        }
-        if (themeText) {
-            themeText.textContent = 'Modo Escuro';
-        }
-        if (themeIconMobile) {
-            themeIconMobile.className = 'fas fa-moon me-2';
-        }
-        if (themeTextMobile) {
-            themeTextMobile.textContent = 'Modo Escuro';
-        }
-    }
 
 });
 
