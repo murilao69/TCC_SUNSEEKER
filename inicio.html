@@ -241,6 +241,21 @@
       </div>
     </section>
   
+
+//
+    <p>Tensão: <span id="tensao">--</span></p>
+<p>Corrente: <span id="corrente">--</span></p>
+<p>Potência: <span id="potencia">--</span></p>
+
+<script src="script.js"></script>
+
+
+
+<div id="tensao"></div>
+<div id="corrente"></div>
+<div id="potencia"></div>
+
+
   </main>
 
   <!-- 🧠 Gráficos Google -->
@@ -298,9 +313,34 @@
       };
       new google.visualization.BarChart(document.getElementById('grafico-barra')).draw(barraData, barraOptions);
     }
+    // DADOS INA TTESTE
+
+
+// Atualiza a cada 1 segundo
+setInterval(atualizarDados, 1000);
+//DADOS IDA TESTE
 
   </script>
-  
+  <script>
+    async function atualizarDados() {
+      try {
+        const res = await fetch("http://192.168.0.100/dados"); // ➜ IP DO ESP32
+        const dados = await res.json();
+    
+        document.getElementById("tensao").innerText = dados.tensao + " V";
+        document.getElementById("corrente").innerText = dados.corrente + " A";
+        document.getElementById("potencia").innerText = dados.potencia + " W";
+    
+      } catch (e) {
+        console.log("Erro ao buscar dados:", e);
+      }
+    }
+    
+    // Atualiza a cada 1 segundo
+    setInterval(atualizarDados, 1000);
+    atualizarDados();
+    </script>
+    
 <!-- 🦶 RODAPÉ -->
 <footer class="py-4">
   <div class="container">
