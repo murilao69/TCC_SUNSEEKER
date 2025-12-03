@@ -252,11 +252,19 @@
               <h5 class="card-title mb-0">Energia Total Gerada</h5>
             </div>
             <div class="card-body">
+              <div class="mb-3">
+                <label for="unit-select" class="form-label">Unidade de Energia:</label>
+                <select id="unit-select" class="form-select">
+                  <option value="kWh">kWh</option>
+                  <option value="Wh">Wh</option>
+                  <option value="mWh">mWh</option>
+                </select>
+              </div>
               <table class="table table-striped">
                 <thead>
                   <tr>
                     <th>Data</th>
-                    <th>Energia Total (kWh)</th>
+                    <th>Energia Total (<span id="unit-display">kWh</span>)</th>
                   </tr>
                 </thead>
                 <tbody id="energia-total-table">
@@ -379,47 +387,10 @@ setInterval(atualizarDados, 1000);
 
   </script>
   <script>
-    // Variáveis para armazenar energia acumulada
+    // Variáveis para armazenar energia acumulada continuamente
     let energiaHoje = parseFloat(localStorage.getItem('energiaHoje') || 0);
     let energiaSemana = parseFloat(localStorage.getItem('energiaSemana') || 0);
     let energiaMes = parseFloat(localStorage.getItem('energiaMes') || 0);
-    let ultimaData = localStorage.getItem('ultimaData') || new Date().toDateString();
-
-    // Função para resetar contadores quando necessário
-    function resetarContadores() {
-      const hoje = new Date().toDateString();
-      const semanaAtual = getWeekNumber(new Date());
-      const mesAtual = new Date().getMonth();
-
-      if (ultimaData !== hoje) {
-        energiaHoje = 0;
-        localStorage.setItem('energiaHoje', energiaHoje);
-      }
-
-      // Reset semanal (simplificado - reseta toda segunda-feira)
-      if (new Date().getDay() === 1 && localStorage.getItem('ultimaSemana') !== semanaAtual.toString()) {
-        energiaSemana = 0;
-        localStorage.setItem('energiaSemana', energiaSemana);
-        localStorage.setItem('ultimaSemana', semanaAtual);
-      }
-
-      // Reset mensal
-      if (localStorage.getItem('ultimoMes') !== mesAtual.toString()) {
-        energiaMes = 0;
-        localStorage.setItem('energiaMes', energiaMes);
-        localStorage.setItem('ultimoMes', mesAtual);
-      }
-
-      ultimaData = hoje;
-      localStorage.setItem('ultimaData', ultimaData);
-    }
-
-    function getWeekNumber(d) {
-      d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-      d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-      return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-    }
 
     async function atualizarDados() {
       try {
@@ -434,10 +405,7 @@ setInterval(atualizarDados, 1000);
         const potenciaKW = parseFloat(dados.potencia) / 1000; // Converter W para kW
         const energiaSegundo = potenciaKW / 3600; // Energia em 1 segundo
 
-        // Resetar contadores se necessário
-        resetarContadores();
-
-        // Acumular energia
+        // Acumular energia continuamente sem reset
         energiaHoje += energiaSegundo;
         energiaSemana += energiaSegundo;
         energiaMes += energiaSegundo;
@@ -448,9 +416,7 @@ setInterval(atualizarDados, 1000);
         localStorage.setItem('energiaMes', energiaMes);
 
         // Atualizar tabela
-        document.getElementById("energia-total-hoje").innerText = energiaHoje.toFixed(6);
-        document.getElementById("energia-total-semana").innerText = energiaSemana.toFixed(6);
-        document.getElementById("energia-total-mes").innerText = energiaMes.toFixed(6);
+        atualizarTabelaComUnidade();
 
         // Atualizar gráfico de energia
         if (energiaData && energiaChart) {
@@ -481,6 +447,38 @@ setInterval(atualizarDados, 1000);
     // Atualiza a cada 1 segundo
     setInterval(atualizarDados, 1000);
     atualizarDados();
+
+    // Função para converter energia baseada na unidade selecionada
+    function converterEnergia(energiaKWh, unidade) {
+      switch (unidade) {
+        case 'Wh':
+          return energiaKWh * 1000;
+        case 'mWh':
+          return energiaKWh * 1000000;
+        default:
+          return energiaKWh;
+      }
+    }
+
+    // Função para atualizar a tabela com a unidade selecionada
+    function atualizarTabelaComUnidade() {
+      const unidade = document.getElementById('unit-select').value;
+      document.getElementById('unit-display').innerText = unidade;
+
+      const energiaHojeConvertida = converterEnergia(energiaHoje, unidade);
+      const energiaSemanaConvertida = converterEnergia(energiaSemana, unidade);
+      const energiaMesConvertida = converterEnergia(energiaMes, unidade);
+
+      document.getElementById("energia-total-hoje").innerText = energiaHojeConvertida.toFixed(6);
+      document.getElementById("energia-total-semana").innerText = energiaSemanaConvertida.toFixed(6);
+      document.getElementById("energia-total-mes").innerText = energiaMesConvertida.toFixed(6);
+    }
+
+    // Event listener para mudança de unidade
+    document.getElementById('unit-select').addEventListener('change', atualizarTabelaComUnidade);
+
+    // Atualizar tabela inicialmente
+    atualizarTabelaComUnidade();
     </script>
     
 <!-- 🦶 RODAPÉ -->
