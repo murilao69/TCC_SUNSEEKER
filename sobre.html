@@ -1,53 +1,37 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sunseeker | Sobre Nós</title>
-
-  <!-- Bootstrap + CSS personalizado -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre</title>
+     <link rel="icon" href="imagens/logo.png" type="image/png">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="CSS/loading.css">
-  <link rel="icon" href="imagens/logo.png" type="image/png">
-
-  <!-- SEO -->
   <meta name="description" content="Sunseeker - Soluções de energia solar para residências e empresas. Inovação em eficiência energética.">
   <meta name="author" content="Sunseeker">
-
-  <!-- ✅ Google Charts -->
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-  <!-- 📄 CSS DA PÁGINA -->
-  <link rel="stylesheet" href="CSS/pagina_padrao.css" />
-
-  <style>
-    #contact-form {
-      background-color: #f8f9fa;
-      color: #000;
-    }
-      #contact-form.dark-mode {
-      background-color: #2c2c2c;
-      color: #fff;
-      border-color: #444;
-    }
+</head>
+<link rel="stylesheet" href="CSS/pagina_padrao.css" />
+<style>
     .card:hover {
       transform: scale(1.03);
       transition: 0.3s ease;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
+
     section {
       padding-top: 3rem;
     }
+
     h2 {
       border-bottom: 2px solid #ffc107;
       padding-bottom: 0.5rem;
       margin-bottom: 2rem;
     }
-
     /* Estilos para o modo escuro */
     [data-theme="dark"] #contact-form {
       background-color: #2c3e50; /* Cor de fundo escura para o formulário */
@@ -231,39 +215,41 @@
   </div>
 </main>
 
-<!-- 🦶 RODAPÉ -->
-<footer class="py-4">
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-4 g-4">
-      <!-- Contato -->
-      <div class="col">
-        <h6>Contato e Suporte</h6>
-        <p>Email: contato@sunseeker.com<br>WhatsApp: (11) 99727-4119</p>
+  <footer class="bg-dark text-light py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <a href="index.html" class="d-inline-block mb-2">
+            <img src="imagens/logo.png" alt="Sunseeker" height="48">
+          </a>
+          <p class="small mb-0">Sunseeker — Soluções e monitoramento de energia solar. Projeto acadêmico.</p>
+        </div>
+        <div class="col-md-2 mb-3">
+          <h6 class="text-uppercase small">Navegação</h6>
+          <ul class="list-unstyled small">
+            <li><a class="text-light text-decoration-none" href="inicio.html">Início</a></li>
+            <li><a class="text-light text-decoration-none" href="solucoes.html">Soluções</a></li>
+            <li><a class="text-light text-decoration-none" href="produtos.html">Produtos</a></li>
+            <li><a class="text-light text-decoration-none" href="simulador.html">Simulador</a></li>
+            <li><a class="text-light text-decoration-none" href="sobre.html">Sobre</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6 class="text-uppercase small">Suporte</h6>
+          <p class="small mb-1">contato@sunseeker.com</p>
+          <p class="small mb-0">WhatsApp: (11) 99727-4119</p>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6 class="text-uppercase small">Siga-nos</h6>
+          <p class="small mb-1">Instagram · LinkedIn · YouTube</p>
+          <p class="small mb-0"><a class="text-light text-decoration-none" href="termos-e-privacidade.html">Termos e Privacidade</a></p>
+        </div>
       </div>
-      <!-- Links rápidos -->
-      <div class="col">
-        <h6>Links rápidos</h6>
-        <ul class="list-unstyled">
-          <li><a href="inicio.html">Início</a></li>
-          <li><a href="solucoes.html">Soluções</a></li>
-          <li><a href="produtos.html">Produtos</a></li>
-          <li><a href="simulador.html">Simulador</a></li>
-          <li><a href="sobre.html">Sobre</a></li>
-        </ul>
-      </div>
-      <!-- Redes sociais -->
-      <div class="col">
-        <h6>Redes Sociais</h6>
-        <p>Instagram | LinkedIn | YouTube</p>
+      <div class="text-center pt-4 border-top border-secondary mt-3">
+        <small>© 2025 Sunseeker. Todos os direitos reservados.</small>
       </div>
     </div>
-  </div>
-  <div class="container text-center pt-4 mt-4 border-top border-secondary">
-    <p class="mb-1">© 2025 Sunseeker. Todos os direitos reservados.</p>
-    <p class="mb-1">Sistema de monitoramento e análise de geração de energia solar em tempo real.</p>
-    <small>Aviso: Os dados exibidos são estimativas baseadas nos sensores do sistema e podem variar.</small>
-  </div>
-</footer>
+  </footer>
 
 <!-- Modal de Perfil do Usuário -->
 <div class="modal fade profile-modal" id="userProfileModal" tabindex="-1" aria-labelledby="userProfileModalLabel" aria-hidden="true">
