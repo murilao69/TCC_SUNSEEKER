@@ -238,6 +238,45 @@
         <div class="col-md-6">
           <div class="dashboard-card" id="grafico-barra"></div>
         </div>
+        <!-- ⚡ Energia Gerada -->
+        <div class="col-12">
+          <div class="dashboard-card" id="grafico-energia"></div>
+        </div>
+      </div>
+
+      <!-- Tabela de Energia Total Gerada -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Energia Total Gerada</h5>
+            </div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Energia Total (kWh)</th>
+                  </tr>
+                </thead>
+                <tbody id="energia-total-table">
+                  <tr>
+                    <td>Hoje</td>
+                    <td id="energia-total-hoje">0.00</td>
+                  </tr>
+                  <tr>
+                    <td>Esta Semana</td>
+                    <td id="energia-total-semana">0.00</td>
+                  </tr>
+                  <tr>
+                    <td>Este Mês</td>
+                    <td id="energia-total-mes">0.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   
@@ -263,10 +302,13 @@
     google.charts.load('current', { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawCharts);
 
+    let energiaData;
+    let energiaChart;
+
     function drawCharts() {
       // 📈 Linha
       const linhaData = google.visualization.arrayToDataTable([
-                
+
         ['Mês', 'Economia (kWh)'],
         ['Jan', 320], ['Fev', 500], ['Mar', 820], ['Abr', 740], ['Mai', 920], ['Jun', 350]
       ]);
@@ -312,6 +354,21 @@
         colors: ['#6c757d', '#649AE1']
       };
       new google.visualization.BarChart(document.getElementById('grafico-barra')).draw(barraData, barraOptions);
+
+      // ⚡ Energia Gerada
+      energiaData = new google.visualization.DataTable();
+      energiaData.addColumn('string', 'Tempo');
+      energiaData.addColumn('number', 'Potência (W)');
+      energiaChart = new google.visualization.LineChart(document.getElementById('grafico-energia'));
+      const energiaOptions = {
+        title: 'Energia Gerada em Tempo Real',
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        colors: ['#FF914D'],
+        hAxis: { title: 'Tempo' },
+        vAxis: { title: 'Potência (W)' }
+      };
+      energiaChart.draw(energiaData, energiaOptions);
     }
     // DADOS INA TTESTE
 
@@ -322,20 +379,105 @@ setInterval(atualizarDados, 1000);
 
   </script>
   <script>
+    // Variáveis para armazenar energia acumulada
+    let energiaHoje = parseFloat(localStorage.getItem('energiaHoje') || 0);
+    let energiaSemana = parseFloat(localStorage.getItem('energiaSemana') || 0);
+    let energiaMes = parseFloat(localStorage.getItem('energiaMes') || 0);
+    let ultimaData = localStorage.getItem('ultimaData') || new Date().toDateString();
+
+    // Função para resetar contadores quando necessário
+    function resetarContadores() {
+      const hoje = new Date().toDateString();
+      const semanaAtual = getWeekNumber(new Date());
+      const mesAtual = new Date().getMonth();
+
+      if (ultimaData !== hoje) {
+        energiaHoje = 0;
+        localStorage.setItem('energiaHoje', energiaHoje);
+      }
+
+      // Reset semanal (simplificado - reseta toda segunda-feira)
+      if (new Date().getDay() === 1 && localStorage.getItem('ultimaSemana') !== semanaAtual.toString()) {
+        energiaSemana = 0;
+        localStorage.setItem('energiaSemana', energiaSemana);
+        localStorage.setItem('ultimaSemana', semanaAtual);
+      }
+
+      // Reset mensal
+      if (localStorage.getItem('ultimoMes') !== mesAtual.toString()) {
+        energiaMes = 0;
+        localStorage.setItem('energiaMes', energiaMes);
+        localStorage.setItem('ultimoMes', mesAtual);
+      }
+
+      ultimaData = hoje;
+      localStorage.setItem('ultimaData', ultimaData);
+    }
+
+    function getWeekNumber(d) {
+      d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+      const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    }
+
     async function atualizarDados() {
       try {
         const res = await fetch("http://192.168.0.100/dados"); // ➜ IP DO ESP32
         const dados = await res.json();
-    
+
         document.getElementById("tensao").innerText = dados.tensao + " V";
         document.getElementById("corrente").innerText = dados.corrente + " A";
         document.getElementById("potencia").innerText = dados.potencia + " W";
-    
+
+        // Calcular energia gerada neste segundo (kWh)
+        const potenciaKW = parseFloat(dados.potencia) / 1000; // Converter W para kW
+        const energiaSegundo = potenciaKW / 3600; // Energia em 1 segundo
+
+        // Resetar contadores se necessário
+        resetarContadores();
+
+        // Acumular energia
+        energiaHoje += energiaSegundo;
+        energiaSemana += energiaSegundo;
+        energiaMes += energiaSegundo;
+
+        // Salvar no localStorage
+        localStorage.setItem('energiaHoje', energiaHoje);
+        localStorage.setItem('energiaSemana', energiaSemana);
+        localStorage.setItem('energiaMes', energiaMes);
+
+        // Atualizar tabela
+        document.getElementById("energia-total-hoje").innerText = energiaHoje.toFixed(6);
+        document.getElementById("energia-total-semana").innerText = energiaSemana.toFixed(6);
+        document.getElementById("energia-total-mes").innerText = energiaMes.toFixed(6);
+
+        // Atualizar gráfico de energia
+        if (energiaData && energiaChart) {
+          const now = new Date();
+          const timeString = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+          energiaData.addRow([timeString, parseFloat(dados.potencia)]);
+
+          // Manter apenas os últimos 20 pontos
+          if (energiaData.getNumberOfRows() > 20) {
+            energiaData.removeRow(0);
+          }
+
+          energiaChart.draw(energiaData, {
+            title: 'Energia Gerada em Tempo Real',
+            curveType: 'function',
+            legend: { position: 'bottom' },
+            colors: ['#FF914D'],
+            hAxis: { title: 'Tempo' },
+            vAxis: { title: 'Potência (W)' }
+          });
+        }
+
       } catch (e) {
         console.log("Erro ao buscar dados:", e);
       }
     }
-    
+
     // Atualiza a cada 1 segundo
     setInterval(atualizarDados, 1000);
     atualizarDados();
