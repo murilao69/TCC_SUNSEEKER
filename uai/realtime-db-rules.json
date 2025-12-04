@@ -1,0 +1,24 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        "esp32": {
+          "readings": {
+            "$readingId": {
+              ".validate": "newData.hasChildren(['tensao','corrente','potencia','timestamp']) && newData.child('tensao').isNumber() && newData.child('corrente').isNumber() && newData.child('potencia').isNumber() && newData.child('timestamp').isNumber()"
+            }
+          },
+          "last": {
+            ".validate": "newData.hasChildren(['tensao','corrente','potencia','timestamp']) && newData.child('timestamp').isNumber()"
+          }
+        }
+      }
+    },
+    "public": {
+      ".read": true,
+      ".write": false
+    }
+  }
+}

@@ -83,6 +83,8 @@
   <!-- 🔆 CABEÇALHO -->
   <!-- Cabeçalho Melhorado -->
   <header class="header-custom d-flex justify-content-between align-items-center px-4 py-3" id="mainHeader">
+    <!-- Indicador de status do Firebase; atualizado dinamicamente -->
+    <div id="firebase-status" class="badge bg-secondary text-white" style="display:none;position:absolute;right:1rem;top:1rem;z-index:1050;">Firebase: --</div>
     <!-- Container do Logo -->
     <div class="d-flex align-items-center gap-3">
         <a href="inicio.html" class="logo-container text-decoration-none">
@@ -286,6 +288,52 @@
           </div>
         </div>
       </div>
+
+      <!-- 📊 Tabela de Energia Calculada pelo Firebase -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Energia Calculada (a partir dos registros armazenados)</h5>
+            </div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Período</th>
+                    <th>Energia (kWh)</th>
+                    <th>Potência Média (W)</th>
+                  </tr>
+                </thead>
+                <tbody id="energia-firebase-table">
+                  <tr>
+                    <td>Hoje</td>
+                    <td id="firebase-energia-hoje">--</td>
+                    <td id="firebase-media-hoje">--</td>
+                  </tr>
+                  <tr>
+                    <td>Esta Semana</td>
+                    <td id="firebase-energia-semana">--</td>
+                    <td id="firebase-media-semana">--</td>
+                  </tr>
+                  <tr>
+                    <td>Este Mês</td>
+                    <td id="firebase-energia-mes">--</td>
+                    <td id="firebase-media-mes">--</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 📈 Gráfico Comparativo entre Usuários -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="dashboard-card" id="grafico-comparativo"></div>
+        </div>
+      </div>
     </section>
   
 
@@ -400,6 +448,15 @@ setInterval(atualizarDados, 1000);
         document.getElementById("tensao").innerText = dados.tensao + " V";
         document.getElementById("corrente").innerText = dados.corrente + " A";
         document.getElementById("potencia").innerText = dados.potencia + " W";
+
+        // Envia leitura ao Realtime Database (se a função estiver disponível)
+        try {
+          if (typeof writeReadingToFirebase === 'function') {
+            writeReadingToFirebase(dados);
+          }
+        } catch (e) {
+          console.error('Erro ao chamar writeReadingToFirebase:', e);
+        }
 
         // Calcular energia gerada neste segundo (kWh)
         const potenciaKW = parseFloat(dados.potencia) / 1000; // Converter W para kW
@@ -560,6 +617,75 @@ setInterval(atualizarDados, 1000);
     };
     firebase.initializeApp(firebaseConfig);
   </script>
+  <!-- Realtime Database (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script>
+    // Inicializa referência ao Realtime Database (SDK compat)
+    const database = firebase.database();
+
+    // Função para gravar leituras vindas do ESP32 no Realtime Database
+    // Agora grava por usuário autenticado em: /users/{uid}/esp32/{readings,last}
+    // Se não houver usuário autenticado, grava em /public/esp32 para testes.
+    // Esta versão atualiza o indicador visual de status (sucesso/erro).
+    let firebaseStatusTimer = null;
+    function setFirebaseStatus(message, success) {
+      const el = document.getElementById('firebase-status');
+      if (!el) return;
+      el.style.display = 'inline-block';
+      el.textContent = 'Firebase: ' + message;
+      el.className = 'badge ' + (success ? 'bg-success text-white' : 'bg-danger text-white');
+      // Limpa qualquer timer anterior
+      if (firebaseStatusTimer) clearTimeout(firebaseStatusTimer);
+      // Auto-esconde após 4 segundos
+      firebaseStatusTimer = setTimeout(() => {
+        el.style.display = 'none';
+      }, 4000);
+    }
+
+    function writeReadingToFirebase(dados) {
+      try {
+        const now = Date.now();
+        const reading = {
+          tensao: Number(dados.tensao),
+          corrente: Number(dados.corrente),
+          potencia: Number(dados.potencia),
+          timestamp: now
+        };
+
+        const auth = firebase.auth();
+        const user = auth.currentUser;
+
+        // Define a referência base dependendo se o usuário está logado
+        let basePath = 'public/esp32';
+        if (user && user.uid) {
+          basePath = `users/${user.uid}/esp32`;
+        } else {
+          console.warn('Nenhum usuário autenticado. Gravando em /public/esp32. Configure autenticação para registrar por usuário.');
+        }
+
+        // Empurra um novo registro para /users/{uid}/esp32/readings ou /public/esp32/readings
+        database.ref(`${basePath}/readings`).push(reading)
+          .then(() => {
+            setFirebaseStatus('Enviado', true);
+          })
+          .catch(function(err){
+            console.error('Erro ao gravar leitura (push):', err);
+            setFirebaseStatus('Erro ao enviar', false);
+          });
+
+        // Atualiza último valor em /users/{uid}/esp32/last ou /public/esp32/last
+        database.ref(`${basePath}/last`).set(reading)
+          .catch(function(err){
+            console.error('Erro ao gravar leitura (set last):', err);
+            // Mostra erro também se set falhar (push pode ter ocorrido antes)
+            setFirebaseStatus('Erro ao atualizar last', false);
+          });
+      } catch (e) {
+        console.error('Erro em writeReadingToFirebase:', e);
+        setFirebaseStatus('Erro interno', false);
+      }
+    }
+  </script>
 <script src="JS/cabeçalho.js"></script>
 <script src="JS/acessibilidade.js"></script>
 <script src="JS/loading.js"></script>
@@ -575,5 +701,261 @@ setInterval(atualizarDados, 1000);
   new window.VLibras.Widget('https://vlibras.gov.br/app');
 </script>
 <script src="JS/perfil.js"></script>
+
+<!-- Subscrição de leituras por usuário e desenho do gráfico (Google Charts) -->
+<script>
+  let userReadingsRef = null;
+  let allUsersData = {}; // Armazena dados de todos os usuários
+
+  // ===== (A) FUNÇÕES DE CÁLCULO DE ENERGIA =====
+  function calculateEnergyMetrics(rows) {
+    const now = new Date();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const weekStart = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).getTime();
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+
+    let energyToday = 0, energyWeek = 0, energyMonth = 0;
+    let countToday = 0, countWeek = 0, countMonth = 0;
+    let potentialToday = 0, potentialWeek = 0, potentialMonth = 0;
+
+    for (let i = 1; i < rows.length; i++) {
+      const prev = rows[i - 1];
+      const curr = rows[i];
+      const timeDiff = (curr.timestamp - prev.timestamp) / 1000 / 3600; // horas
+      const avgPower = (Number(prev.potencia) + Number(curr.potencia)) / 2 / 1000; // kW
+      const energyInterval = avgPower * timeDiff; // kWh
+
+      const currTime = curr.timestamp;
+
+      if (currTime >= todayStart) {
+        energyToday += energyInterval;
+        countToday++;
+        potentialToday += Number(curr.potencia);
+      }
+      if (currTime >= weekStart) {
+        energyWeek += energyInterval;
+        countWeek++;
+        potentialWeek += Number(curr.potencia);
+      }
+      if (currTime >= monthStart) {
+        energyMonth += energyInterval;
+        countMonth++;
+        potentialMonth += Number(curr.potencia);
+      }
+    }
+
+    return {
+      today: { energy: energyToday, avgPower: countToday > 0 ? potentialToday / countToday : 0 },
+      week: { energy: energyWeek, avgPower: countWeek > 0 ? potentialWeek / countWeek : 0 },
+      month: { energy: energyMonth, avgPower: countMonth > 0 ? potentialMonth / countMonth : 0 }
+    };
+  }
+
+  function updateEnergyTables() {
+    // Atualiza tabela de energia calculada pelo Firebase
+    const auth = firebase.auth();
+    const uid = auth.currentUser ? auth.currentUser.uid : null;
+
+    if (uid && allUsersData[uid]) {
+      const metrics = allUsersData[uid].metrics;
+      document.getElementById('firebase-energia-hoje').textContent = metrics.today.energy.toFixed(4);
+      document.getElementById('firebase-media-hoje').textContent = metrics.today.avgPower.toFixed(2);
+      document.getElementById('firebase-energia-semana').textContent = metrics.week.energy.toFixed(4);
+      document.getElementById('firebase-media-semana').textContent = metrics.week.avgPower.toFixed(2);
+      document.getElementById('firebase-energia-mes').textContent = metrics.month.energy.toFixed(4);
+      document.getElementById('firebase-media-mes').textContent = metrics.month.avgPower.toFixed(2);
+    }
+  }
+
+  // ===== (B) SUBSCRIÇÃO POR USUÁRIO COM TOOLTIP =====
+  function attachReadingsListenerForBasePath(basePath) {
+    try {
+      if (typeof database === 'undefined' || typeof google === 'undefined' || !google.visualization) return;
+
+      // Desliga listener anterior se existir
+      if (userReadingsRef) {
+        try { userReadingsRef.off(); } catch(e) { console.warn('Erro ao desligar listener anterior', e); }
+        userReadingsRef = null;
+      }
+
+      userReadingsRef = database.ref(basePath + '/readings').limitToLast(200);
+
+      userReadingsRef.on('value', snapshot => {
+        const auth = firebase.auth();
+        const uid = auth.currentUser ? auth.currentUser.uid : 'public';
+
+        // Monta DataTable com coluna datetime
+        const dataTable = new google.visualization.DataTable();
+        dataTable.addColumn('datetime', 'Tempo');
+        dataTable.addColumn('number', 'Potência (W)');
+        dataTable.addColumn({ type: 'string', role: 'tooltip', p: { html: true } });
+
+        const rows = [];
+        snapshot.forEach(child => {
+          const val = child.val();
+          if (val && val.timestamp) rows.push(val);
+        });
+
+        // Ordena por timestamp
+        rows.sort((a,b) => a.timestamp - b.timestamp);
+
+        // Calcula métricas
+        const metrics = calculateEnergyMetrics(rows);
+        allUsersData[uid] = { rows, metrics };
+
+        rows.forEach(r => {
+          const ts = Number(r.timestamp);
+          const pot = Number(r.potencia || 0);
+          const tens = Number(r.tensao || 0);
+          const corr = Number(r.corrente || 0);
+          const dateStr = new Date(ts).toLocaleString('pt-BR');
+          
+          // HTML para tooltip (opção html:true)
+          const tooltip = `<div style="background:#fd9; padding:5px; border-radius:3px; border:1px solid #333;">
+            <strong>${dateStr}</strong><br/>
+            Potência: ${pot.toFixed(1)} W<br/>
+            Tensão: ${tens.toFixed(2)} V<br/>
+            Corrente: ${corr.toFixed(3)} A
+          </div>`;
+
+          dataTable.addRow([new Date(ts), pot, tooltip]);
+        });
+
+        updateEnergyTables();
+
+        const opts = {
+          title: 'Energia Gerada em Tempo Real (com dados armazenados)',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          colors: ['#FF914D'],
+          hAxis: { title: 'Tempo', format: 'HH:mm:ss' },
+          vAxis: { title: 'Potência (W)' },
+          tooltip: { isHtml: true, trigger: 'focus' }
+        };
+
+        // Desenha no container existente
+        const container = document.getElementById('grafico-energia');
+        if (container) {
+          const chart = new google.visualization.LineChart(container);
+          chart.draw(dataTable, opts);
+        }
+
+        // Atualiza status
+        const count = rows.length;
+        console.log('Leituras carregadas (', basePath, '):', count);
+        const statusEl = document.getElementById('firebase-status');
+        if (statusEl) {
+          statusEl.style.display = 'inline-block';
+          statusEl.textContent = 'Registros: ' + count;
+          statusEl.className = 'badge bg-info text-white';
+          setTimeout(() => { statusEl.style.display = 'none'; }, 3000);
+        }
+      });
+
+    } catch (e) {
+      console.error('Erro em attachReadingsListenerForBasePath:', e);
+    }
+  }
+
+  // ===== (C) CARREGAMENTO DE TODOS OS USUÁRIOS E GRÁFICO COMPARATIVO =====
+  function loadAllUsersComparative() {
+    try {
+      // Carrega lista de usuários
+      database.ref('users').once('value', snapshot => {
+        const usersList = [];
+        snapshot.forEach(userSnap => {
+          usersList.push(userSnap.key);
+        });
+
+        // Carrega últimas leituras de cada usuário
+        let loadedCount = 0;
+        usersList.forEach(uid => {
+          database.ref(`users/${uid}/esp32/last`).once('value', snap => {
+            const data = snap.val();
+            if (data) {
+              allUsersData[uid] = allUsersData[uid] || {};
+              allUsersData[uid].last = data;
+            }
+            loadedCount++;
+
+            // Quando todos os usuários foram carregados, desenha gráfico comparativo
+            if (loadedCount === usersList.length) {
+              drawComparativeChart();
+            }
+          });
+        });
+
+        if (usersList.length === 0) {
+          console.log('Nenhum usuário encontrado');
+        }
+      });
+    } catch (e) {
+      console.error('Erro em loadAllUsersComparative:', e);
+    }
+  }
+
+  function drawComparativeChart() {
+    try {
+      if (typeof google === 'undefined' || !google.visualization) return;
+
+      const dataTable = new google.visualization.DataTable();
+      dataTable.addColumn('string', 'Usuário');
+      dataTable.addColumn('number', 'Potência Atual (W)');
+      dataTable.addColumn('number', 'Energia Hoje (kWh)');
+
+      const auth = firebase.auth();
+      const currentUid = auth.currentUser ? auth.currentUser.uid : null;
+
+      Object.keys(allUsersData).forEach(uid => {
+        const data = allUsersData[uid];
+        const pot = data.last ? Number(data.last.potencia || 0) : 0;
+        const energy = data.metrics ? data.metrics.today.energy : 0;
+        
+        // Marca o usuário atual com asterisco
+        const label = uid === currentUid ? uid.substring(0, 8) + '* (você)' : uid.substring(0, 8);
+        dataTable.addRow([label, pot, energy]);
+      });
+
+      const opts = {
+        title: 'Comparativo entre Usuários (Potência Atual vs Energia Hoje)',
+        bars: 'horizontal',
+        colors: ['#FF914D', '#649AE1'],
+        legend: { position: 'bottom' },
+        hAxis: { title: 'Valor' }
+      };
+
+      const container = document.getElementById('grafico-comparativo');
+      if (container) {
+        const chart = new google.visualization.BarChart(container);
+        chart.draw(dataTable, opts);
+      }
+    } catch (e) {
+      console.error('Erro em drawComparativeChart:', e);
+    }
+  }
+
+  // ===== INICIALIZAÇÃO =====
+  // Observa mudanças no estado de autenticação para trocar a fonte de dados
+  firebase.auth().onAuthStateChanged(user => {
+    if (user && user.uid) {
+      attachReadingsListenerForBasePath(`users/${user.uid}/esp32`);
+    } else {
+      // Fallback para public (útil para testes sem login)
+      attachReadingsListenerForBasePath('public/esp32');
+    }
+
+    // Carrega comparativo de todos os usuários
+    loadAllUsersComparative();
+  });
+
+  // Atualiza comparativo a cada 10 segundos
+  setInterval(loadAllUsersComparative, 10000);
+
+  // Cleanup
+  window.addEventListener('beforeunload', () => {
+    try { if (userReadingsRef) userReadingsRef.off(); } catch(e){}
+  });
+</script>
+
 </body>
 </html>
