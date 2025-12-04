@@ -337,6 +337,44 @@
         </div>
       </div>
 
+      <!-- 🗄️ Registros Armazenados (últimos registros do Firebase) -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="card-title mb-0">Registros Armazenados</h5>
+                <div class="d-flex align-items-center gap-2">
+                  <select id="readings-limit-select" class="form-select form-select-sm" style="width:85px;">
+                    <option value="10">10</option>
+                    <option value="20" selected>20</option>
+                    <option value="50">30</option>
+                    <option value="10">40</option>
+                    <option value="50">50</option>
+                  </select>
+                  <button id="readings-load-more" type="button" class="btn btn-sm btn-outline-secondary">Carregar mais</button>
+                </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-sm table-striped" id="firebase-readings-table">
+                  <thead>
+                    <tr>
+                      <th>Data / Hora</th>
+                      <th>Tensão (V)</th>
+                      <th>Corrente (A)</th>
+                      <th>Potência (W)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="firebase-readings-tbody">
+                    <tr><td colspan="4" class="text-center text-muted">Carregando...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
     </section>
   
@@ -841,6 +879,11 @@ setInterval(atualizarDados, 1000);
           chart.draw(dataTable, opts);
         }
 
+        // Atualiza tabela de registros exibidos
+        try {
+          if (typeof updateReadingsTable === 'function') updateReadingsTable(rows);
+        } catch(e) { console.warn('Erro ao atualizar tabela de registros:', e); }
+
         // Atualiza status
         const count = rows.length;
         console.log('Leituras carregadas (', basePath, '):', count);
@@ -977,6 +1020,75 @@ setInterval(atualizarDados, 1000);
     }
   }
 
+  // Variáveis para controle dinâmico da tabela de leituras
+  let readingsLimit = 20; // valor inicial
+  let lastRowsCache = [];
+
+  // Atualiza a tabela HTML com os últimos registros (limita por readingsLimit)
+  function updateReadingsTable(rows) {
+    const tbody = document.getElementById('firebase-readings-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    // usa cache se rows não for fornecido
+    if (!rows) rows = lastRowsCache || [];
+    lastRowsCache = rows;
+
+    if (!rows || rows.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">Sem registros</td></tr>';
+      return;
+    }
+
+    // Mostra os últimos N registros, mais recentes primeiro
+    const limit = Math.max(1, parseInt(readingsLimit, 10) || 20);
+    const lastRows = rows.slice(-limit).reverse();
+    lastRows.forEach(r => {
+      const ts = Number(r.timestamp) || Date.now();
+      const dateStr = new Date(ts).toLocaleString('pt-BR');
+      const tens = Number(r.tensao || 0).toFixed(2);
+      const corr = Number(r.corrente || 0).toFixed(3);
+      const pot = Number(r.potencia || 0).toFixed(1);
+      const tr = `<tr><td>${dateStr}</td><td>${tens}</td><td>${corr}</td><td>${pot}</td></tr>`;
+      tbody.insertAdjacentHTML('beforeend', tr);
+    });
+  }
+
+  // Atualiza o limite a partir do seletor e redesenha a tabela
+  function setReadingsLimit(newLimit) {
+    readingsLimit = newLimit;
+    updateReadingsTable();
+  }
+
+  // Função para avançar para o próximo limite disponível (10 -> 20 -> 50 -> all)
+  function loadMoreReadings() {
+    const options = [10, 20, 50];
+    const current = parseInt(readingsLimit, 10) || 20;
+    const idx = options.indexOf(current);
+    if (idx === -1) {
+      // se atual não estiver na lista, aumenta para 20
+      readingsLimit = 20;
+    } else if (idx < options.length - 1) {
+      readingsLimit = options[idx + 1];
+    } else {
+      // se já era o maior, mostra todos
+      readingsLimit = lastRowsCache.length || options[options.length - 1];
+    }
+    // Atualiza o seletor visualmente
+    const sel = document.getElementById('readings-limit-select');
+    if (sel) {
+      const found = Array.from(sel.options).some(o => Number(o.value) === Number(readingsLimit));
+      if (!found) {
+        // adiciona opção 'Todos' temporária
+        const opt = document.createElement('option');
+        opt.value = readingsLimit;
+        opt.text = String(readingsLimit === 0 ? 'Todos' : readingsLimit);
+        sel.appendChild(opt);
+      }
+      sel.value = String(readingsLimit);
+    }
+    updateReadingsTable();
+  }
+
   // ===== INICIALIZAÇÃO =====
   // Observa mudanças no estado de autenticação para trocar a fonte de dados
   firebase.auth().onAuthStateChanged(user => {
@@ -993,6 +1105,23 @@ setInterval(atualizarDados, 1000);
 
   // Atualiza comparativo a cada 10 segundos
   setInterval(loadAllUsersComparative, 10000);
+
+  // Event listeners para controle dinâmico da tabela de leituras
+  document.addEventListener('DOMContentLoaded', () => {
+    const sel = document.getElementById('readings-limit-select');
+    const btn = document.getElementById('readings-load-more');
+    if (sel) {
+      sel.addEventListener('change', (e) => {
+        const v = parseInt(e.target.value, 10) || 20;
+        setReadingsLimit(v);
+      });
+    }
+    if (btn) {
+      btn.addEventListener('click', () => {
+        loadMoreReadings();
+      });
+    }
+  });
 
   // Cleanup
   window.addEventListener('beforeunload', () => {
