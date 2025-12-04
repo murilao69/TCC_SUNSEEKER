@@ -1,6 +1,6 @@
 // este arquivo é o Service Worker, ele serve para gerenciar o cache de recursos da aplicação
 // e otimizar o desempenho do carregamento do site
-const CACHE_NAME = "sunseeker-v10";//Não esquecer de mudar as versão antes de cada commit
+const CACHE_NAME = "sunseeker-v13";//Não esquecer de mudar as versão antes de cada commit
 const FILES_TO_CACHE = [
   "/TCC_SUNSEEKER/",
   "/TCC_SUNSEEKER/index.html",
