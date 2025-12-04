@@ -222,30 +222,39 @@
       <h2 class="fw-bold" id="dashboardTitle">
         Dashboard de <span id="userNameDisplay">...</span> <i class="fas fa-chart-line ms-2"></i>
       </h2>
-      <p>Veja abaixo diferentes formas de visualização da economia de energia com os sistemas da Sunseeker:</p>
-      <div class="row g-4">
-        <!-- 📈 Linha -->
-        <div class="col-md-6">
-          <div class="dashboard-card" id="grafico-linha"></div>
+      <div class="alert alert-info mb-4" role="alert">
+        <i class="fas fa-info-circle me-2"></i>
+        <strong>Monitore sua geração em tempo real:</strong> Veja abaixo diferentes formas de visualização da economia de energia com os sistemas da Sunseeker.
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <div class="card border-start border-warning border-3">
+        <div class="card-body">
+          <h6 class="card-title text-muted">Tensão</h6>
+          <h3 id="tensao" class="text-warning fw-bold">-- V</h3>
         </div>
-        <!-- 🟠 Pizza -->
-        <div class="col-md-6">
-          <div class="dashboard-card" id="grafico-pizza"></div>
+          </div>
         </div>
-        <!-- 📊 Coluna -->
-        <div class="col-md-6">
-          <div class="dashboard-card" id="grafico-coluna"></div>
+        <div class="col-md-4">
+          <div class="card border-start border-info border-3">
+        <div class="card-body">
+          <h6 class="card-title text-muted">Corrente</h6>
+          <h3 id="corrente" class="text-info fw-bold">-- A</h3>
         </div>
-        <!-- 📉 Barra -->
-        <div class="col-md-6">
-          <div class="dashboard-card" id="grafico-barra"></div>
+          </div>
         </div>
-        <!-- ⚡ Energia Gerada -->
-        <div class="col-12">
-          <div class="dashboard-card" id="grafico-energia"></div>
+        <div class="col-md-4">
+          <div class="card border-start border-success border-3">
+        <div class="card-body">
+          <h6 class="card-title text-muted">Potência</h6>
+          <h3 id="potencia" class="text-success fw-bold">-- W</h3>
+        </div>
+          </div>
         </div>
       </div>
 
+    
       <!-- Tabela de Energia Total Gerada -->
       <div class="row mt-4">
         <div class="col-12">
@@ -328,19 +337,11 @@
         </div>
       </div>
 
-      <!-- 📈 Gráfico Comparativo entre Usuários -->
-      <div class="row mt-4">
-        <div class="col-12">
-          <div class="dashboard-card" id="grafico-comparativo"></div>
-        </div>
-      </div>
+
     </section>
   
 
-//
-    <p>Tensão: <span id="tensao">--</span></p>
-<p>Corrente: <span id="corrente">--</span></p>
-<p>Potência: <span id="potencia">--</span></p>
+
 
 <script src="script.js"></script>
 
