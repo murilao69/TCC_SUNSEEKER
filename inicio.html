@@ -238,6 +238,53 @@
         <div class="col-md-6">
           <div class="dashboard-card" id="grafico-barra"></div>
         </div>
+        <!-- ⚡ Energia Gerada -->
+        <div class="col-12">
+          <div class="dashboard-card" id="grafico-energia"></div>
+        </div>
+      </div>
+
+      <!-- Tabela de Energia Total Gerada -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Energia Total Gerada</h5>
+            </div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="unit-select" class="form-label">Unidade de Energia:</label>
+                <select id="unit-select" class="form-select">
+                  <option value="kWh">kWh</option>
+                  <option value="Wh">Wh</option>
+                  <option value="mWh">mWh</option>
+                </select>
+              </div>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Energia Total (<span id="unit-display">kWh</span>)</th>
+                  </tr>
+                </thead>
+                <tbody id="energia-total-table">
+                  <tr>
+                    <td>Hoje</td>
+                    <td id="energia-total-hoje">0.00</td>
+                  </tr>
+                  <tr>
+                    <td>Esta Semana</td>
+                    <td id="energia-total-semana">0.00</td>
+                  </tr>
+                  <tr>
+                    <td>Este Mês</td>
+                    <td id="energia-total-mes">0.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   
@@ -263,10 +310,13 @@
     google.charts.load('current', { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawCharts);
 
+    let energiaData;
+    let energiaChart;
+
     function drawCharts() {
       // 📈 Linha
       const linhaData = google.visualization.arrayToDataTable([
-                
+
         ['Mês', 'Economia (kWh)'],
         ['Jan', 320], ['Fev', 500], ['Mar', 820], ['Abr', 740], ['Mai', 920], ['Jun', 350]
       ]);
@@ -312,6 +362,21 @@
         colors: ['#6c757d', '#649AE1']
       };
       new google.visualization.BarChart(document.getElementById('grafico-barra')).draw(barraData, barraOptions);
+
+      // ⚡ Energia Gerada
+      energiaData = new google.visualization.DataTable();
+      energiaData.addColumn('string', 'Tempo');
+      energiaData.addColumn('number', 'Potência (W)');
+      energiaChart = new google.visualization.LineChart(document.getElementById('grafico-energia'));
+      const energiaOptions = {
+        title: 'Energia Gerada em Tempo Real',
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        colors: ['#FF914D'],
+        hAxis: { title: 'Tempo' },
+        vAxis: { title: 'Potência (W)' }
+      };
+      energiaChart.draw(energiaData, energiaOptions);
     }
     // DADOS INA TTESTE
 
@@ -322,23 +387,98 @@ setInterval(atualizarDados, 1000);
 
   </script>
   <script>
+    // Variáveis para armazenar energia acumulada continuamente
+    let energiaHoje = parseFloat(localStorage.getItem('energiaHoje') || 0);
+    let energiaSemana = parseFloat(localStorage.getItem('energiaSemana') || 0);
+    let energiaMes = parseFloat(localStorage.getItem('energiaMes') || 0);
+
     async function atualizarDados() {
       try {
         const res = await fetch("http://192.168.0.100/dados"); // ➜ IP DO ESP32
         const dados = await res.json();
-    
+
         document.getElementById("tensao").innerText = dados.tensao + " V";
         document.getElementById("corrente").innerText = dados.corrente + " A";
         document.getElementById("potencia").innerText = dados.potencia + " W";
-    
+
+        // Calcular energia gerada neste segundo (kWh)
+        const potenciaKW = parseFloat(dados.potencia) / 1000; // Converter W para kW
+        const energiaSegundo = potenciaKW / 3600; // Energia em 1 segundo
+
+        // Acumular energia continuamente sem reset
+        energiaHoje += energiaSegundo;
+        energiaSemana += energiaSegundo;
+        energiaMes += energiaSegundo;
+
+        // Salvar no localStorage
+        localStorage.setItem('energiaHoje', energiaHoje);
+        localStorage.setItem('energiaSemana', energiaSemana);
+        localStorage.setItem('energiaMes', energiaMes);
+
+        // Atualizar tabela
+        atualizarTabelaComUnidade();
+
+        // Atualizar gráfico de energia
+        if (energiaData && energiaChart) {
+          const now = new Date();
+          const timeString = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+          energiaData.addRow([timeString, parseFloat(dados.potencia)]);
+
+          // Manter apenas os últimos 20 pontos
+          if (energiaData.getNumberOfRows() > 20) {
+            energiaData.removeRow(0);
+          }
+
+          energiaChart.draw(energiaData, {
+            title: 'Energia Gerada em Tempo Real',
+            curveType: 'function',
+            legend: { position: 'bottom' },
+            colors: ['#FF914D'],
+            hAxis: { title: 'Tempo' },
+            vAxis: { title: 'Potência (W)' }
+          });
+        }
+
       } catch (e) {
         console.log("Erro ao buscar dados:", e);
       }
     }
-    
+
     // Atualiza a cada 1 segundo
     setInterval(atualizarDados, 1000);
     atualizarDados();
+
+    // Função para converter energia baseada na unidade selecionada
+    function converterEnergia(energiaKWh, unidade) {
+      switch (unidade) {
+        case 'Wh':
+          return energiaKWh * 1000;
+        case 'mWh':
+          return energiaKWh * 1000000;
+        default:
+          return energiaKWh;
+      }
+    }
+
+    // Função para atualizar a tabela com a unidade selecionada
+    function atualizarTabelaComUnidade() {
+      const unidade = document.getElementById('unit-select').value;
+      document.getElementById('unit-display').innerText = unidade;
+
+      const energiaHojeConvertida = converterEnergia(energiaHoje, unidade);
+      const energiaSemanaConvertida = converterEnergia(energiaSemana, unidade);
+      const energiaMesConvertida = converterEnergia(energiaMes, unidade);
+
+      document.getElementById("energia-total-hoje").innerText = energiaHojeConvertida.toFixed(6);
+      document.getElementById("energia-total-semana").innerText = energiaSemanaConvertida.toFixed(6);
+      document.getElementById("energia-total-mes").innerText = energiaMesConvertida.toFixed(6);
+    }
+
+    // Event listener para mudança de unidade
+    document.getElementById('unit-select').addEventListener('change', atualizarTabelaComUnidade);
+
+    // Atualizar tabela inicialmente
+    atualizarTabelaComUnidade();
     </script>
     
 <!-- 🦶 RODAPÉ -->
