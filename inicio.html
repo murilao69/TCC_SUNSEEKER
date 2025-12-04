@@ -394,7 +394,7 @@ setInterval(atualizarDados, 1000);
 
     async function atualizarDados() {
       try {
-        const res = await fetch("http://192.168.0.100/dados"); // ➜ IP DO ESP32
+        const res = await fetch("http://192.168.0.101/dados"); // ➜ IP DO ESP32
         const dados = await res.json();
 
         document.getElementById("tensao").innerText = dados.tensao + " V";
