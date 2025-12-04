@@ -861,36 +861,78 @@ setInterval(atualizarDados, 1000);
   function loadAllUsersComparative() {
     try {
       // Carrega lista de usuários
-      database.ref('users').once('value', snapshot => {
-        const usersList = [];
-        snapshot.forEach(userSnap => {
-          usersList.push(userSnap.key);
-        });
-
-        // Carrega últimas leituras de cada usuário
-        let loadedCount = 0;
-        usersList.forEach(uid => {
-          database.ref(`users/${uid}/esp32/last`).once('value', snap => {
-            const data = snap.val();
-            if (data) {
-              allUsersData[uid] = allUsersData[uid] || {};
-              allUsersData[uid].last = data;
-            }
-            loadedCount++;
-
-            // Quando todos os usuários foram carregados, desenha gráfico comparativo
-            if (loadedCount === usersList.length) {
-              drawComparativeChart();
-            }
+      database.ref('users').once('value')
+        .then(snapshot => {
+          const usersList = [];
+          snapshot.forEach(userSnap => {
+            usersList.push(userSnap.key);
           });
-        });
 
-        if (usersList.length === 0) {
-          console.log('Nenhum usuário encontrado');
+          if (usersList.length === 0) {
+            // Sem usuários — tenta fallback para public
+            console.log('Nenhum usuário encontrado; tentando fallback public/esp32');
+            loadPublicComparative();
+            return;
+          }
+
+          // Carrega últimas leituras de cada usuário
+          let loadedCount = 0;
+          usersList.forEach(uid => {
+            database.ref(`users/${uid}/esp32/last`).once('value').then(snap => {
+              const data = snap.val();
+              if (data) {
+                allUsersData[uid] = allUsersData[uid] || {};
+                allUsersData[uid].last = data;
+              }
+              loadedCount++;
+
+              // Quando todos os usuários foram carregados, desenha gráfico comparativo
+              if (loadedCount === usersList.length) {
+                drawComparativeChart();
+              }
+            }).catch(err => {
+              console.warn('Não foi possível ler users/' + uid + '/esp32/last:', err);
+              loadedCount++;
+              if (loadedCount === usersList.length) drawComparativeChart();
+            });
+          });
+        })
+        .catch(err => {
+          console.warn('Erro ao listar users (provavelmente regras bloqueadas):', err);
+          // Tenta carregar dados públicos como fallback
+          loadPublicComparative();
+        });
+    } catch (e) {
+      console.error('Erro em loadAllUsersComparative:', e);
+    }
+  }
+
+  // Fallback: carrega entradas públicas (útil quando listar users é proibido)
+  function loadPublicComparative() {
+    try {
+      database.ref('public/esp32/last').once('value').then(snap => {
+        const data = snap.val();
+        allUsersData = {}; // limpa
+        if (data) {
+          // usa chave 'public' para o nó público
+          allUsersData['public'] = { last: data, metrics: { today: { energy: 0 } } };
+          drawComparativeChart();
+        } else {
+          // não há dados públicos — mostra placeholder
+          const container = document.getElementById('grafico-comparativo');
+          if (container) {
+            container.innerHTML = '<div class="p-4 text-center text-muted">Sem dados para comparação</div>';
+          }
+        }
+      }).catch(err => {
+        console.warn('Erro ao ler public/esp32/last:', err);
+        const container = document.getElementById('grafico-comparativo');
+        if (container) {
+          container.innerHTML = '<div class="p-4 text-center text-muted">Sem dados para comparação</div>';
         }
       });
     } catch (e) {
-      console.error('Erro em loadAllUsersComparative:', e);
+      console.error('Erro em loadPublicComparative:', e);
     }
   }
 
